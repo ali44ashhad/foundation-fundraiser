@@ -1,23 +1,28 @@
-import logo from "./assets/ISHEP-logo.avif";
+import logo from "./assets/ISHEP-logo.avif"; // update your logo path
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [moreOpenMobile, setMoreOpenMobile] = useState(false);
-  const [desktopMoreOpen, setDesktopMoreOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // mobile menu
+  const [moreOpenMobile, setMoreOpenMobile] = useState(false); // mobile "More" section
+  const [desktopMoreOpen, setDesktopMoreOpen] = useState(false); // desktop More dropdown
 
   const moreRef = useRef(null);
   const mobileMenuRef = useRef(null);
 
   useEffect(() => {
+    // close dropdowns when clicking outside
     function handleClickOutside(e) {
       if (moreRef.current && !moreRef.current.contains(e.target)) {
         setDesktopMoreOpen(false);
       }
+      if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target)) {
+        // don't auto-close mobile menu here to avoid interfering with normal nav clicks
+      }
     }
+
     function handleEsc(e) {
       if (e.key === "Escape") {
         setMenuOpen(false);
@@ -25,6 +30,7 @@ export default function Navbar() {
         setDesktopMoreOpen(false);
       }
     }
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEsc);
     return () => {
@@ -57,41 +63,26 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur-xl bg-black/40 border-b border-white/10 shadow-lg shadow-black/30">
+    // make the navbar sticky: sticky top-0 and high z-index
+    <nav className="sticky top-0 z-50 backdrop-blur-md bg-gray-50 border-b border-white/10 shadow-sm">
       <div className="container mx-auto px-6 h-20">
         <div className="flex justify-between items-center h-full">
           {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex items-center space-x-3"
-          >
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center space-x-3">
             <Link to="/" className="flex items-center">
-              <img
-                src={logo}
-                alt="logo"
-                className="h-10 w-auto md:h-12 object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]"
-              />
+              <img src={logo} alt="logo" className="h-10 w-auto md:h-12 object-contain" />
             </Link>
           </motion.div>
 
           {/* Desktop Links */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="hidden lg:flex items-center space-x-6 xl:space-x-8"
-          >
+          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="hidden lg:flex items-center space-x-6 xl:space-x-8">
             {primary.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="text-white/90 hover:text-lime-400 transition-colors font-medium text-base"
-              >
+              <Link key={item.name} to={item.path} className="text-gray-900 hover:text-lime-400 transition-colors font-medium text-base">
                 {item.name}
               </Link>
             ))}
 
-            {/* More dropdown (desktop) */}
+            {/* More dropdown (desktop) - controlled by state for reliable open/close */}
             <div ref={moreRef} className="relative">
               <button
                 aria-haspopup="true"
@@ -99,30 +90,16 @@ export default function Navbar() {
                 onClick={() => setDesktopMoreOpen((s) => !s)}
                 onMouseEnter={() => setDesktopMoreOpen(true)}
                 onMouseLeave={() => setDesktopMoreOpen(false)}
-                className="flex items-center gap-2 text-white/90 hover:text-lime-400 font-medium text-base"
+                className="flex items-center gap-2 text-gray-900 hover:text-lime-400 font-medium text-base"
               >
-                More{" "}
-                <ChevronDown
-                  size={14}
-                  className={`transition-transform ${
-                    desktopMoreOpen ? "rotate-180" : "rotate-0"
-                  }`}
-                />
+                More <ChevronDown size={14} className={`transition-transform ${desktopMoreOpen ? "rotate-180" : "rotate-0"}`} />
               </button>
 
+              {/* Use visibility via state rather than group-hover so it's keyboard accessible and works on touch */}
               {desktopMoreOpen && (
-                <div
-                  onMouseEnter={() => setDesktopMoreOpen(true)}
-                  onMouseLeave={() => setDesktopMoreOpen(false)}
-                  className="absolute right-0 bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl mt-3 py-2 min-w-[240px] shadow-xl shadow-lime-500/10"
-                >
+                <div onMouseEnter={() => setDesktopMoreOpen(true)} onMouseLeave={() => setDesktopMoreOpen(false)} className="absolute right-0 bg-black/90 backdrop-blur-md border border-white/10 rounded-lg mt-2 py-2 min-w-[220px] shadow-xl">
                   {moreItems.map((mi) => (
-                    <Link
-                      key={mi.name}
-                      to={mi.path}
-                      className="block px-4 py-2 text-white/80 hover:text-lime-400 hover:bg-white/10 transition-all"
-                      onClick={() => setDesktopMoreOpen(false)}
-                    >
+                    <Link key={mi.name} to={mi.path} className="block px-4 py-2 text-gray-300 hover:text-lime-400 hover:bg-white/10" onClick={() => setDesktopMoreOpen(false)}>
                       {mi.name}
                     </Link>
                   ))}
@@ -133,23 +110,14 @@ export default function Navbar() {
 
           {/* Donate button (desktop) */}
           <div className="hidden md:block">
-            <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-lg hover:shadow-lime-500/30 transition-all"
-            >
+            <motion.button initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-2.5 rounded-xl font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base">
               Donate Now
             </motion.button>
           </div>
 
           {/* Mobile menu toggle */}
           <div className="lg:hidden">
-            <button
-              onClick={() => setMenuOpen((s) => !s)}
-              className="text-white focus:outline-none"
-            >
+            <button onClick={() => setMenuOpen((s) => !s)} className="text-gray-900 focus:outline-none">
               {menuOpen ? <X size={26} /> : <Menu size={26} />}
             </button>
           </div>
@@ -158,49 +126,25 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="lg:hidden bg-black/95 backdrop-blur-xl border-t border-white/10 py-4 px-6"
-        >
+        <div ref={mobileMenuRef} className="lg:hidden bg-black/90 backdrop-blur-md border-t border-white/10 py-4 px-6">
           <div className="space-y-2">
             {primary.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => setMenuOpen(false)}
-                className="block text-white/80 hover:text-lime-400 font-medium py-2 transition-colors"
-              >
+              <Link key={item.name} to={item.path} onClick={() => setMenuOpen(false)} className="block text-gray-300 hover:text-lime-400 font-medium py-2">
                 {item.name}
               </Link>
             ))}
 
             {/* Mobile "More" expandable */}
             <div>
-              <button
-                onClick={() => setMoreOpenMobile((s) => !s)}
-                className="w-full flex items-center justify-between text-white/80 hover:text-lime-400 font-medium py-2"
-              >
+              <button onClick={() => setMoreOpenMobile((s) => !s)} className="w-full flex items-center justify-between text-gray-300 hover:text-lime-400 font-medium py-2">
                 <span>More</span>
-                <ChevronDown
-                  size={16}
-                  className={`${
-                    moreOpenMobile ? "rotate-180" : "rotate-0"
-                  } transition-transform`}
-                />
+                <ChevronDown size={16} className={`${moreOpenMobile ? "rotate-180" : "rotate-0"} transition-transform`} />
               </button>
 
               {moreOpenMobile && (
                 <div className="mt-1 pl-3 border-l border-white/10">
                   {moreItems.map((mi) => (
-                    <Link
-                      key={mi.name}
-                      to={mi.path}
-                      onClick={() => {
-                        setMenuOpen(false);
-                        setMoreOpenMobile(false);
-                      }}
-                      className="block text-white/75 hover:text-lime-400 font-medium py-2 transition-colors"
-                    >
+                    <Link key={mi.name} to={mi.path} onClick={() => { setMenuOpen(false); setMoreOpenMobile(false); }} className="block text-gray-300 hover:text-lime-400 font-medium py-2">
                       {mi.name}
                     </Link>
                   ))}
@@ -209,11 +153,7 @@ export default function Navbar() {
             </div>
 
             {/* Donate CTA on mobile */}
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full mt-4 bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-lime-500/25 transition-all"
-            >
+            <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full mt-3 bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-lime-500/25 transition-all">
               Donate Now
             </motion.button>
           </div>
@@ -221,4 +161,4 @@ export default function Navbar() {
       )}
     </nav>
   );
-}
+}  

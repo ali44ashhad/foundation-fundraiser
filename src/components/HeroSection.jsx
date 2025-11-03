@@ -15,7 +15,7 @@ const HeroSection = () => {
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="sub-title text-18 leading-18 white1 uppercase mb-5 font-medium inline-block"
+              className="sub-title white1 uppercase mb-5 font-medium inline-block"
             >
               Real Humans Powered By Community ❤️
             </motion.span>
@@ -24,7 +24,7 @@ const HeroSection = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-lime-400 via-pink-500 to-orange-500 text-transparent bg-clip-text leading-tight"
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-lime-400 via-pink-500 to-orange-500 text-transparent bg-clip-text leading-tight"
             >
               Integrated Solutions
               <br /> Helping Everyday People
