@@ -3,13 +3,13 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Users, BookOpen } from "lucide-react";
-import sarah from "../assets/slide6.png";
+import sarah from "../../assets/slide6.png";
 
 const HeroSection = () => {
   return (
     <section className="hero3 bg-cover min-h-screen relative z-10 py-10">
       <div className="container mx-auto px-6 pb-5">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 py-30">
           {/* Left Text Column */}
           <div className="w-full lg:w-1/2 text-center lg:text-left">
             <motion.span

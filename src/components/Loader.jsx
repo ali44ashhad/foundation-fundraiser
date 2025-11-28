@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import logo from "./assets/ISHEP-logo.avif";
+import logo from "../assets/ISHEP-logo.avif";
 
 const Loader = () => {
   return (
