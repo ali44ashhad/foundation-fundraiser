@@ -1,6 +1,7 @@
 import React from 'react'
 import { DataDeviceData } from '../data/data'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const DataAndDevice = () => {
   return (
@@ -88,11 +89,11 @@ const DataAndDevice = () => {
     }}
   >
     {/* Image */}
-    <div className="w-full h-auto md:h-64 overflow-hidden rounded-t-lg flex items-center justify-center bg-gray-50">
+    <div className="w-full h-auto md:h-64 rounded-none overflow-hidden flex items-center justify-center bg-gray-50 rounded-br-[30%]">
       <img
         src={post.image}
         alt={post.title}
-        className="object-cover w-full h-auto"
+        className="object-cover w-full h-auto rounded-br-[30%]"
       />
     </div>
 
@@ -117,12 +118,12 @@ const DataAndDevice = () => {
           </a>
         )}
         {index === 1 && (
-          <a
-            href="/free-data-2"
+          <Link
+            to="/device-bank"
             className="block w-full text-center py-2 rounded-lg font-semibold text-white bg-gradient-to-r from-[#B2DF0A] via-[#E70C80] to-[#FF850B] shadow-md hover:opacity-95 transition"
           >
             Free Data
-          </a>
+          </Link>
         )}
         {index === 2 && (
           <a

@@ -32,29 +32,73 @@ const Philanthropist = () => {
     <>
 
       {/* HERO */}
-      <motion.div
-        className="relative w-full h-[80vh] min-h-[300px] overflow-hidden"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={staggerContainer}
-      >
-        <motion.img
-          src=""
-          alt="Hands stacked in different skin tones"
-          className="w-full h-full object-cover"
-          variants={directional('left')}
-        />
+     <motion.div
+  className="relative w-full h-[80vh] min-h-[300px] overflow-hidden"
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.3 }}
+  variants={staggerContainer}
+>
+  {/* Background image */}
+  <motion.img
+    src=""
+    alt="Hands stacked in different skin tones"
+    className="w-full h-full object-cover"
+    variants={directional('left')}
+    aria-hidden="true"
+  />
 
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
-          variants={fadeUp}
+  {/* Dark overlay for readability */}
+  <motion.div
+    className="absolute inset-0 w-full h-full bg-[#1D2838]"
+    variants={fadeUp}
+    aria-hidden="true"
+  />
+
+  {/* Centered content */}
+  <motion.div
+    className="absolute inset-0 flex items-center justify-center px-4"
+    variants={fadeUp}
+  >
+    <div className="max-w-3xl text-center">
+  <h1
+  className="text-transparent bg-clip-text 
+             bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000]
+             text-3xl sm:text-4xl md:text-5xl lg:text-6xl 
+             font-bold tracking-widest uppercase leading-tight"
+>
+  PHILANTHROPIST
+</h1>
+
+
+      <p className="text-white/90 mt-4 text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto">
+        Committed to compassionate action and lasting community impact — supporting initiatives
+        that uplift, connect, and create opportunities for those most in need.
+      </p>
+
+      <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+        <motion.button
+          className="px-6 py-3 rounded-full text-white font-semibold 
+                     bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] 
+                     shadow-lg focus:outline-none"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
         >
-          <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase text-center px-4">
-            PHILANTHROPIST
-          </h1>
-        </motion.div>
-      </motion.div>
+          Learn More
+        </motion.button>
+
+        <motion.button
+          className="px-6 py-3 rounded-full text-white font-semibold 
+                     border-2 border-white bg-white/5 backdrop-blur-sm"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          Get Involved
+        </motion.button>
+      </div>
+    </div>
+  </motion.div>
+</motion.div>
 
 
       {/* INTRO / TITLE */}
@@ -122,40 +166,56 @@ const Philanthropist = () => {
           className="flex text-black flex-col lg:flex-row items-center w-11/12 md:w-7xl m-auto h-auto pt-16 pb-20"
         >
           {/* Left Side: Title and Benefits List */}
-          <motion.div
-            className="lg:w-1/2 w-full mb-12 lg:mb-0 lg:pr-8"
-            variants={directional('left')}
-          >
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent"
-              style={{ backgroundImage: "linear-gradient(135deg, #afde00 0%, #e70c80 50%, #ff8000 100%)" }}
-            >
-              Benefits of Racial Harmony
-            </h2>
+         <motion.div
+  className="lg:w-1/2 w-full mb-12 lg:mb-0 lg:pr-8"
+  variants={directional('left')}
+>
+  {/* Heading */}
+  <h2
+    className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent"
+    style={{ backgroundImage: "linear-gradient(135deg, #afde00 0%, #e70c80 50%, #ff8000 100%)" }}
+  >
+    Benefits of Racial Harmony
+  </h2>
 
-            <div className="space-y-4">
-              {benefits.map((benefit, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.05 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-start bg-white/10 backdrop-blur-sm border border-white/10 p-4 rounded-xl shadow transition duration-300 hover:bg-white/20"
-                >
-                  <svg className="w-6 h-6 flex-shrink-0 mt-1 mr-3" fill="none" stroke="#afde00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+  {/* Small paragraph under heading */}
+  <p className="text-gray-600 mb-6">
+    Racial harmony promotes understanding, equality, and cooperation among diverse communities. It strengthens social bonds and encourages cultural appreciation.
+  </p>
 
-                  <div>
-                    <p className="text-lg md:text-xl font-semibold">{benefit.label}</p>
-                    <p className="text-sm text-gray-500 hidden md:block">{benefit.description}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+  {/* List without borders/shadow */}
+  <div className="space-y-4">
+    {benefits.map((benefit, index) => (
+      <motion.div
+        key={index}
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.05 }}
+        viewport={{ once: true, amount: 0.25 }}
+        whileHover={{ scale: 1.02 }}
+        className="flex items-start p-0" // removed border, shadow, bg
+      >
+        {/* Different pink icons for each list item */}
+        <svg
+          className="w-6 h-6 flex-shrink-0 mt-1 mr-3 text-pink-500"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          {index === 0 && <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />}
+          {index === 1 && <path d="M12 21l-8-9h6V3h4v9h6z" />}
+          {index === 2 && <path d="M12 4a8 8 0 1 0 8 8A8 8 0 0 0 12 4zm0 14a6 6 0 1 1 6-6 6 6 0 0 1-6 6z" />}
+          {index === 3 && <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z" />}
+        </svg>
+
+        <div>
+          <p className="text-lg md:text-xl font-semibold">{benefit.label}</p>
+          <p className="text-sm text-gray-500 hidden md:block">{benefit.description}</p>
+        </div>
+      </motion.div>
+    ))}
+  </div>
+</motion.div>
+
 
           {/* Right Side: Image with Content */}
           <motion.div
@@ -272,18 +332,18 @@ const Philanthropist = () => {
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             {newsInsights.map((item, index) => {
-              const isReversed = index % 2 !== 0;
+              const isReversed = index % 1 !== 0;
 
               return (
                 <motion.div
                   key={index}
-                  className="bg-white rounded-xl shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden"
+                  className="bg-white rounded-sm shadow hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                   variants={directional(isReversed ? 'right' : 'left')}
                 >
                   <div className="flex flex-col md:flex-row h-full">
                     <div className={`w-full md:w-2/5 min-h-[150px] md:min-h-full ${isReversed ? 'md:order-last' : 'md:order-first'}`}>
-                      <div className="h-full w-full bg-cover bg-center" style={{ backgroundImage: `url(${item.imageUrl})` }}>
-                        <img src={item.imageUrl} alt={item.imageAlt} className="w-full h-full object-cover md:h-full opacity-0" aria-hidden="true" />
+                      <div className="h-full w-full bg-cover bg-center rounded-br-[20%]" style={{ backgroundImage: `url(${item.imageUrl})` }}>
+                        <img src={item.imageUrl} alt={item.imageAlt} className="w-full h-full object-cover rounded-br-[20%] md:h-full opacity-0 " aria-hidden="true" />
                       </div>
                     </div>
 
@@ -294,7 +354,7 @@ const Philanthropist = () => {
                       <div className="mt-4">
                         <div className="flex flex-wrap gap-2 mb-3">
                           {item.tags.map((tag) => (
-                            <span key={tag} className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full text-blue-700 bg-blue-100">{tag}</span>
+                            <span key={tag} className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full text-pink-700 bg-pink-100">{tag}</span>
                           ))}
                         </div>
                         <p className="text-sm text-gray-500">{item.date}</p>
@@ -306,10 +366,18 @@ const Philanthropist = () => {
             })}
           </div>
 
-          <div className="mt-12 text-center">
-            <p className="text-base md:text-lg text-gray-700 font-semibold mb-3">Investigating why EDI matters with ISHEP Foundation, is a duty to all of us.</p>
-            <a href="#" className="inline-flex items-center justify-center px-6 py-2 md:px-8 md:py-3 border border-transparent text-sm md:text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition duration-150 ease-in-out shadow">Contact Us to Learn More About Our Course Timetable</a>
-          </div>
+       <div className="mt-12 text-center">
+  <p className="text-base md:text-lg text-gray-700 font-semibold mb-3">
+    Investigating why EDI matters with ISHEP Foundation, is a duty to all of us.
+  </p>
+  <a
+    href="#"
+    className="inline-flex items-center rounded-br-2xl rounded-tl-2xl justify-center px-4 py-2 md:px-6 md:py-2 border border-transparent text-xs md:text-sm font-medium text-white bg-gradient-to-r from-lime-500 to-pink-600 hover:opacity-90 transition duration-150 ease-in-out shadow-md"
+  >
+    Contact Us
+  </a>
+</div>
+
         </motion.div>
       </motion.section>
 

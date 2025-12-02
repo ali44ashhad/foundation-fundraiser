@@ -2,6 +2,7 @@ import React from 'react'
 import { Check } from 'lucide-react'; 
 import { motion } from 'framer-motion';
 import { volunteerData } from '../data/data';
+import images from '../../assets/images';
 
 
 
@@ -89,17 +90,19 @@ const Volunteer = () => {
                     {/* Right Column: Image Block (Placeholder) */}
                     <div className="order-1 md:order-2">
                         <div 
-                            className="w-full h-80 bg-gray-200 flex items-center justify-center rounded-xl shadow-2xl overflow-hidden mb-8 md:mb-0"
-                            style={{ 
-                                height: '500px',
-                                background: 'linear-gradient(135deg, #E70C80, #FF8000)',
-                                border: '6px solid #E70C80'
-                            }}
-                        >
-                            <p className="text-gray-500 font-semibold text-center p-4">
-                                [Image Placeholder] - Replace this block with your desired image or component.
-                            </p>
-                        </div>
+  className="w-full bg-gray-200 flex items-center justify-center rounded-xl shadow-2xl overflow-hidden mb-8 md:mb-0"
+  style={{ 
+    height: '500px',
+    border: '6px solid #E70C80'
+  }}
+>
+  <img 
+    src={images.volunteer1}
+    alt="Device Distribution"
+    className="w-full h-full object-cover"
+  />
+</div>
+
                     </div>
                 </div>
 
@@ -107,18 +110,16 @@ const Volunteer = () => {
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                     {/* Left Column: Image Block (Placeholder) */}
                     <div className="order-2 md:order-1">
-                         <div 
-                            className="w-full h-80 bg-gray-200 flex items-center justify-center rounded-xl shadow-2xl overflow-hidden mb-8 md:mb-0"
-                            style={{ 
-                                height: '500px',
-                                background: 'linear-gradient(135deg, #AFDE00, #FF8000)',
-                                border: '6px solid #AFDE00'
-                            }}
-                        >
-                            <p className="text-gray-500 font-semibold text-center p-4">
-                                [Image Placeholder] - Replace this block with your desired image or component.
-                            </p>
-                        </div>
+                        <div 
+  className="w-full h-[500px] flex items-center justify-center rounded-xl shadow-2xl overflow-hidden mb-8 md:mb-0 border-[6px] border-[#AFDE00]"
+  style={{ background: 'linear-gradient(135deg, #AFDE00, #FF8000)' }}
+>
+  <img
+    src={images.volunteer2}
+    className="w-full h-full object-cover"
+  />
+</div>
+
                     </div>
 
                     {/* Right Column: Feature Points (Manually added content) */}

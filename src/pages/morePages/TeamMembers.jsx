@@ -90,70 +90,63 @@ const TeamMembers = () => {
           {/* Right Scrollable Section */}
           <div className="w-1/2">
             <div className="space-y-0">
-              {teamMembers.map((member, index) => (
-                <div
-                  key={member.id}
-                  className="flex flex-col justify-center px-12 py-12 bg-white relative overflow-hidden"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(175, 222, 0, 0.03) 0%, rgba(231, 12, 128, 0.03) 50%, rgba(255, 128, 0, 0.03) 100%)",
-                  }}
-                >
-                  {/* Subtle Parallax Background */}
-                  <div
-                    className="absolute inset-0 opacity-10"
-                    style={{
-                      transform: `translateY(${scrollY * 0.15}px)`,
-                      backgroundImage:
-                        "radial-gradient(circle at 20% 50%, #AFDE00, transparent 50%), radial-gradient(circle at 80% 80%, #E70C80, transparent 50%)",
-                    }}
-                  />
+         {teamMembers.map((member, index) => (
+  <div key={member.id} className="w-full flex justify-center px-4 py-8">
+    <div
+      className="w-full max-w-4xl bg-white relative overflow-hidden rounded-2xl"
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(175, 222, 0, 0.03) 0%, rgba(231, 12, 128, 0.03) 50%, rgba(255, 128, 0, 0.03) 100%)",
+      }}
+    >
+      {/* Decorative background (optional subtle gradients) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-10 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 50%, #AFDE00, transparent 50%), radial-gradient(circle at 80% 80%, #E70C80, transparent 50%)",
+          zIndex: 0,
+        }}
+      />
 
-                  <div className="relative z-10 max-w-xl">
-                    {/* Image Container with subtle parallax */}
-                    <div
-                      className="mb-8 relative h-auto rounded-2xl overflow-hidden shadow-2xl"
-                      style={{
-                        transform: `translateY(${(scrollY - index * innerHeight) * 0.06}px)`,
-                      }}
-                    >
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                    </div>
+      {/* IMAGE */}
+      <div className="relative w-full h-80 md:h-96 lg:h-[28rem] rounded-t-2xl overflow-hidden">
+        <img
+          src={member.image}
+          alt={member.name}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
-                    {/* Content */}
-                    <div className="mb-6">
-                      <h2 className="text-4xl font-bold text-black mb-2">
-                        {member.name}
-                      </h2>
-                      <p className="text-[#E70C80] font-bold text-xl mb-4">
-                        {member.title}
-                      </p>
-                      <div className="h-1 w-16 bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] rounded-full" />
-                    </div>
+      {/* CONTENT */}
+      <div className="relative z-10 px-8 py-8 md:py-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-2">
+          {member.name}
+        </h2>
 
-                    <div className="space-y-4">
-                      {member.description.split("\n\n").map((paragraph, idx) => (
-                        <p
-                          key={idx}
-                          className="text-black leading-relaxed text-base"
-                        >
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
-                  </div>
+        <p className="text-[#E70C80] font-bold text-lg sm:text-xl mb-4">
+          {member.title}
+        </p>
 
-                  {/* Section Indicator */}
-                  <div className="absolute bottom-8 right-8 text-gray-400 text-sm font-semibold">
-                    {index + 1} / {teamMembers.length}
-                  </div>
-                </div>
-              ))}
+        <div className="mb-6 h-1 w-16 bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] rounded-full" />
+
+        <div className="space-y-4">
+          {member.description.split("\n\n").map((paragraph, idx) => (
+            <p
+              key={idx}
+              className="text-black leading-relaxed text-base sm:text-lg"
+            >
+              {paragraph}
+            </p>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+))}
+
+
             </div>
           </div>
         </div>

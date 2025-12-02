@@ -163,7 +163,7 @@ const Stem = () => {
 
           {/* RIGHT SIDE IMAGE */}
           <motion.div
-            className="w-full flex justify-center lg:justify-end"
+            className="w-full h- flex justify-center lg:justify-end"
             initial={{ opacity: 0, x: 24 }}
             whileInView={{ opacity: 1, x: 0, transition: { duration: 0.7, ease: 'easeOut' } }}
             viewport={{ once: true, amount: 0.22 }}
@@ -171,7 +171,7 @@ const Stem = () => {
             <motion.img
               src={images.stemRight}
               alt="STEM Training"
-              className="w-full max-w-md rounded-xl shadow-xl object-cover"
+              className="w-full max-w-md object-cover"
               whileHover={{ scale: 1.02, y: -6 }}
               transition={{ type: 'spring', stiffness: 120, damping: 14 }}
             />

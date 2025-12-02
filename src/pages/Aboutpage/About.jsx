@@ -42,15 +42,15 @@ const About = () => {
   // Ref to measure the total height and position of the timeline container
   const timelineRef = useRef(null);
 
+  // Use bounding rect so we correctly compute progress on mobile/desktop and after resizes
   const handleScroll = () => {
     if (timelineRef.current) {
-      const timelineTop = timelineRef.current.offsetTop;
+      const rect = timelineRef.current.getBoundingClientRect();
       const timelineHeight = timelineRef.current.offsetHeight;
       const viewportHeight = window.innerHeight;
-      const scrollY = window.scrollY;
 
-
-      const distanceScrolled = scrollY - timelineTop + (viewportHeight / 2);
+      // distance from top of viewport to the center of the viewport
+      const distanceScrolled = Math.min(Math.max(viewportHeight / 2 - rect.top, 0), timelineHeight);
 
       let progress = (distanceScrolled / timelineHeight) * 100;
 
@@ -61,11 +61,13 @@ const About = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
     handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
 
@@ -77,8 +79,7 @@ const About = () => {
   return (
     <>
       {/* Hero */}
-    <Lamp>
-    </Lamp>
+      <Lamp />
 
       {/* // about second section // */}
       <div className='w-full bg-[linear-gradient(to_bottom_right,#e2d9e2,white,#caedcd)]'>
@@ -92,7 +93,6 @@ const About = () => {
               </span>
             </h1>
 
-
             {/* Paragraph Content */}
             <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
               The ISHEP exists to promote racial harmony and strengthen community resilience through PRH – Education, STEAM – Training support, and Social welfare initiatives. Our vision is to nurture inclusive, empowered communities where opportunity and dignity are accessible to all—especially those most often overlooked.
@@ -101,6 +101,8 @@ const About = () => {
 
           {/* Timeline Sections Container - Ref is attached here */}
           <div ref={timelineRef} className="relative md:border-l-0">
+
+            {/* Progress Line: visible on all breakpoints. left is responsive via Tailwind classes */}
             <div
               style={{
                 backgroundColor: COLORS.orange,
@@ -108,16 +110,19 @@ const About = () => {
                 width: '2px',
                 position: 'absolute',
                 top: 0,
-                left: 'calc(25% - 2px)',
-                transition: 'height 0.1s linear',
-                zIndex: 1,
+                transition: 'height 0.12s linear',
+                zIndex: 20,
               }}
-              className="hidden md:block"
-            ></div>
+              className="left-8 md:left-[calc(25%-2px)]"
+            />
+
+            {/* Static gray track behind timeline (full height) - visible on all sizes */}
+            <div className="absolute top-0 left-8 md:left-[calc(25%-2px)] w-px h-full bg-gray-200 z-10" />
 
             {/* Mapped Timeline Items */}
             {timelineData.map((item, index) => (
               <motion.div key={item.year} {...timelineItemMotion} className={`relative flex ${index === timelineData.length - 1 ? '' : 'pb-20'}`}>
+
 
                 {/* Left Side: Year (Sticky on large screens) */}
                 <div className="w-1/4 pr-8 hidden md:block">
@@ -127,22 +132,28 @@ const About = () => {
                   </div>
                 </div>
 
-                {/* Middle Separator Line and Dot */}
-                <div className="flex flex-col items-center mr-4 md:mr-0 z-20">
-                  {/* Static Background Line (Subtle gray track for the unfilled portion) */}
-                  <div className="w-px h-full bg-gray-200 absolute left-4 md:left-auto md:relative"></div>
 
-                  {/* Timeline Dot (Green: #afde00) */}
-                  <div style={{ backgroundColor: COLORS.green }} className="w-4 h-4 rounded-full relative -left-0.5 md:relative md:-ml-0"></div>
+                {/* Middle Separator Line and Dot */}
+                <div className="relative w-[34px] md:w-auto">
+                  {/* Dot (absolutely positioned to overlap the progress track) */}
+                  <div
+                    style={{ backgroundColor: COLORS.green }}
+                    className="absolute z-40 left-8 md:left-[calc(25%-2px)] top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-2 border-white"
+                  />
+                  {/* Spacer to maintain layout */}
+                  <div className="w-full flex justify-start md:justify-center pointer-events-none" style={{ minWidth: 32 }} />
                 </div>
 
+
                 {/* Right Side: Content */}
-                <div className="w-full md:w-3/4 pl-6 md:pl-0 z-10">
+                <div className="w-full md:w-3/4 pl-3 md:pl-0 z-20">
+
 
                   {/* Display Year on mobile screens */}
                   <div style={{ color: COLORS.green }} className="md:hidden text-2xl font-extrabold mb-4">
                     {item.year}
                   </div>
+
 
                   {/* Image and Content Block */}
                   <div className="p-4 bg-white rounded-lg mb-4 shadow-md">
@@ -150,7 +161,12 @@ const About = () => {
                       src={item.imageSrc}
                       alt={`Year ${item.year} event`}
                       className="w-full h-auto object-cover rounded mb-4"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = 'https://placehold.co/600x400/6B7280/FFFFFF?text=Image+Not+Found';
+                      }}
                     />
+
 
                     {/* Title Color (Pink: #e70c80) */}
                     <h3 style={{ color: COLORS.pink }} className="text-2xl font-semibold mb-2">
@@ -166,7 +182,7 @@ const About = () => {
       </div>
 
 
-      <motion.div {...sectionMotion} className="min-h-screen bg-[linear-gradient(to_top_right,#e8d2ea,white,#caedcd)] font-sans p-4 sm:p-8 md:p-12">
+      <motion.div {...sectionMotion} className="min-h-[auto] sm:min-h-screen bg-[linear-gradient(to_top_right,#e8d2ea,white,#caedcd)] font-sans p-4 sm:p-8 md:p-12">
         <div className="max-w-7xl mx-auto">
 
           {/* Header Section */}
@@ -200,26 +216,25 @@ const About = () => {
                   className={`flex flex-col ${layoutClasses} gap-6 md:gap-12 items-center w-full p-4`}
                 >
                   {/* Image Block */}
-                  {/* Image Block */}
                   <div className="
-  w-full md:w-1/2 overflow-hidden 
-  rounded-xl shadow-xl border-2 border-gray-100
-  transition-all duration-500 ease-out
-  hover:shadow-2xl
-  hover:scale-[1.02] hover:-translate-y-2 hover:rounded-br-[20%]
-  hover:rounded-tl-[20%]
-  active:rounded-tl-[20%] active:rounded-br-[20%]
+            w-full md:w-1/2 overflow-hidden 
+            rounded-xl shadow-xl border-2 border-gray-100
+            transition-all duration-500 ease-out
+            hover:shadow-2xl
+            hover:scale-[1.02] hover:-translate-y-2 hover:rounded-br-[20%]
+            hover:rounded-tl-[20%]
+            active:rounded-tl-[20%] active:rounded-br-[20%]
 
 ">
                     <img
                       src={image}
                       alt={alt}
                       className="
-      w-full h-full object-cover 
-      aspect-video md:aspect-auto 
-      transition-transform duration-500 ease-out
-      hover:scale-105
-    "
+                w-full h-full object-cover 
+                aspect-video md:aspect-auto 
+                transition-transform duration-500 ease-out
+                hover:scale-105
+              "
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src =
@@ -266,8 +281,6 @@ const About = () => {
         </div>
       </motion.div>
     </>
-
-
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { motion } from "framer-motion";
+import images from "../assets/images";
 
 const INFO_BLOCKS = [
   {
@@ -114,21 +115,17 @@ const ContactUs = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left: Image / Graphic block */}
             <div className="relative h-64 lg:h-auto bg-gray-200 flex items-center justify-center p-4 rounded-b-2xl lg:rounded-b-none lg:rounded-br-none lg:rounded-l-3xl overflow-hidden">
-
-              <div className="text-white z-10 text-center">
-                
-
                 <img
-                  src=""
+                  src={images.contactImage}
                   alt="Illustration of contact or meeting"
-                  className="w-full h-full object-cover absolute inset-0 mix-blend-multiply opacity-50"
+                  className="w-full h-full object-cover absolute inset-0"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src =
                       "";
                   }}
                 />
-              </div>
+          
             </div>
 
             {/* Right: Form */}

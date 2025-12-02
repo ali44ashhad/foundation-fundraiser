@@ -13,7 +13,7 @@ const moreDropdownItems = [
   { name: 'Registration for Instinct', href: '#register' },
   { name: 'Login', href: '#login' },
   { name: 'Hope and Resilience', href: '/hope' },
-  { name: 'Echoes of Kindness', href: '#echoes' },
+  { name: 'Echoes of Kindness', href: '/harmony' },
   { name: 'Why Donation', href: '/donation' },
   { name: 'STEM', href: '/stem' },
   { name: 'Data And Device', href: '/data-device' },
@@ -133,7 +133,9 @@ const App = () => {
               </div>
               
                <div className="hidden md:block">
-           <motion.button initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="rounded-tl-3xl rounded-br-3xl hover:rounded-xl hover:cursor-pointer active: bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base">
+           <motion.button initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} 
+           className="rounded-tl-3xl rounded-br-3xl hover:rounded-xl hover:cursor-pointer active: bg-gradient-to-r from-lime-500 to-pink-600 text-white 
+           px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base">
              Donate Now
            </motion.button>
          </div>
@@ -199,7 +201,7 @@ const App = () => {
 
               {/* More Dropdown Items */}
               {isMobileMoreOpen && (
-                <div className="space-y-1 mt-2 pl-4">
+                <div className="space-y-1 mt-2">
                   {moreDropdownItems.map((item) => (
                     <div key={item.name}>
                       {item.submenu ? (
@@ -218,7 +220,7 @@ const App = () => {
 
                           {/* Vacancies Submenu */}
                           {isVacanciesSubmenuOpen && (
-                            <div className="space-y-1 mt-2 pl-4 border-l border-gray-600">
+                            <div className="space-y-1 mt-2 border-l border-gray-600">
                               {item.submenu.map((subItem) => (
                                 <a
                                   key={subItem.name}

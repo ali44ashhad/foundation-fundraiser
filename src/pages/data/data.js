@@ -7,22 +7,43 @@ import { color } from 'framer-motion';
 
 export const timelineData = [
   {
-    year: 2012,
-    title: 'First Steps',
-    imageSrc: 'https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=800',
-    description: "Maecenas ipsum - dolor sit amet, consectetur adipiscing elit magna, molestie iaculis sit consectetur adipiscing elit magna, molestie iaculis sit amet commodo tellus consectetur elit tellus, luctus nec ullamcorper mattis nibh tellus. Mattis nibh tellus.",
+    year: 2021,
+    title: 'Our Purpose & Vision',
+    imageSrc: images.foundation1,
+    description:
+      "ISHEP exists to promote racial harmony and strengthen community resilience through PRH education, STEAM-focused training support, and social welfare initiatives. Our vision is to nurture inclusive, empowered communities where opportunity and dignity are accessible to all—especially those most often overlooked.",
   },
   {
-    year: 2016,
-    title: 'Expansion & Growth',
-    imageSrc: 'https://images.pexels.com/photos/5212327/pexels-photo-5212327.jpeg?auto=compress&cs=tinysrgb&w=800',
-    description: "Proin posuere dapibus magna laoreet posuere. Lorem ipsum dolor sit amet, adipiscing elit. Proin dignissim. Maecenas commodo – tellus consectetur dapibus leo nibh tellus dapibus magna laoreet posuere. We expanded our team and moved to a larger office space.",
+    year: 2022,
+    title: 'Our Operational Goals',
+    imageSrc: images.foundation2,
+    description:
+      "Our goals include educational empowerment through PRH-based training, bridging the digital divide by providing refurbished devices and digital skills development, uplifting communities through a social enterprise café that creates jobs and fosters cohesion, collaborating with local authorities and schools to scale impact, and sustaining growth through transparent, accountable systems that build trust and enable long-term service delivery.",
   },
   {
-    year: 2020,
-    title: 'Innovation Milestone',
-    imageSrc: 'https://images.pexels.com/photos/7176461/pexels-photo-7176461.jpeg?auto=compress&cs=tinysrgb&w=800',
-    description: "Aenean vitae dolor ut massa mollis accumsan. Sed vel arcu ac urna facilisis auctor. Pellentesque ac ante in nisl fermentum sodales. We launched our flagship product, revolutionizing the industry and setting new standards.",
+    year: 2023,
+    title: 'Our Mission & Commitment',
+    imageSrc: images.foundation3,
+    description:
+      "Though newly registered in September 2024, ISHEP builds on lived experience and professional insight to become a catalyst for change in London’s underserved communities. Our mission is rooted in enriching community well-being and promoting racial harmony, while empowering young people to overcome life’s challenges. Through compassion and opportunity, we strive to build a more inclusive, brighter future for all.",
+  },
+
+  // ⭐ NEW BLOCK 1
+  {
+    year: 2024,
+    title: 'Strengthening Community Connections',
+    imageSrc: images.foundation4,
+    description:
+      "We are deepening our engagement with underserved communities by developing culturally responsive support programmes, hosting local events, and creating safe spaces where individuals can build confidence, foster belonging, and celebrate shared identity. Our goal is to nurture environments where every voice is heard and valued.",
+  },
+
+  // ⭐ NEW BLOCK 2
+  {
+    year: 2025,
+    title: 'Building a Sustainable Future',
+    imageSrc: images.foundation5,
+    description:
+      "ISHEP is investing in long-term development through strategic partnerships, volunteer mobilisation, and resource-building initiatives. We aim to create lasting impact by strengthening our organisational infrastructure, improving service delivery, and ensuring that vulnerable individuals continue to receive the support, tools, and opportunities they need to thrive.",
   },
 ];
 
@@ -247,33 +268,34 @@ export const philanthropySteps = [
 
 
 // PHR education //
+
 export const newsInsights = [
   {
     title: "Equality, Diversity, and Inclusion: The Foundational Concepts",
     tags: ["EDI", "FOUNDATION"],
     date: "November 20, 2025",
-    imageUrl: images.skill2,
+    imageUrl: images.philanthropist1,
     imageAlt: "Three diverse hands interlocking",
   },
   {
     title: "Understanding Racism: Eradicating the Root Cause of Inequality",
     tags: ["EDUCATION", "LESSONS"],
     date: "October 15, 2025",
-    imageUrl: images.skill2, // Image representing learning/discussion
+    imageUrl: images.philanthropist2, // Image representing learning/discussion
     imageAlt: "People discussing around a table",
   },
   {
     title: "Why Inclusion Matters: Creating a Sense of Belonging and Community",
     tags: ["WORKPLACE", "STRATEGY"],
     date: "September 1, 2025",
-    imageUrl: images.skill2, // Image representing professional connection
+    imageUrl: images.philanthropist3, // Image representing professional connection
     imageAlt: "Team members connecting in an office",
   },
   {
     title: "Racial Harmony Education: Challenging Preconceived Notions",
     tags: ["ETHICS", "COURSE"],
     date: "August 24, 2025",
-    imageUrl: images.skill2, // Image representing social justice
+    imageUrl: images.philanthropist4, // Image representing social justice
     imageAlt: "A scale representing justice and fairness",
   },
 ];
@@ -403,29 +425,29 @@ export const teamMembers = [
     id: 1,
     name: "PAUL DIXON",
     title: "Founder and Chair",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    description: "Paul volunteered for roles that highlighted his strong leadership and commitment. He enlisted with the 7th Battalion, The Rifles, to become a Non-Commissioned Officer, weapons instructor, and conducting static small arms ranges. A few years Later, he joined the Army Cadet Force, as a staff instructor before securing the position as the Sector Sports Officer.\n\nBeyond his professional life as Environmental and Anti social behaviours officer, Paul's hobbies reflect his creativity and passion. He is an avid baker, finding joy in crafting delicious treats, a talent appreciated by his family, friends, and colleagues amongst other attributes. His creative outlet allows him to express his artistic side, designing the ISHEP logo, which represents people of different cultures integrating.\n\nPaul is also deeply committed to environmental sustainability, taking significant steps to reduce his carbon footprint, such as transitioning to an electric vehicle and becoming well-versed in the adverse and favourable aspects of owning an EV. In his own words, he said, \"I use what I have for the greater good to help the greatest number of people through Education – Training and Social Welfare.\""
+    image: images.paul,
+    description: "Paul has strong leadership and commitment, serving in the 7th Battalion and Army Cadet Force. Professionally, he works as an Environmental and Anti-Social Behaviours Officer. Paul is also a creative, designing the ISHEP logo, and passionate about sustainability, using his resources for the greater good."
   },
   {
     id: 2,
     name: "EBONIE SENIOR",
     title: "Vice Chair",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop",
-    description: "\" Learning can not take place in chaos \"\n- Ebonie Senior 2024\n\nEbonie Senior is an accomplished English teacher with over 11 years of experience, dedicated to inspiring a love of language and literature in her students. Passionate about writing, reading, and exploring the intricacies of the human psyche, she integrates these interests into her teaching to cultivate critical thinking and empathy.\n\nOutside the classroom, Ebonie serves as the Vice Chair of the ISHEP Charity, an organisation devoted to promoting racial harmony through education and professional development.\n\nRooted in her Jamaican heritage and driven by a passion for equity and inclusion, she works tirelessly to create transformative learning experiences and promote meaningful social change."
+    image: images.ebonie,
+    description: "Ebonie Senior is an accomplished English teacher with 11+ years of experience. She inspires critical thinking and empathy in students, while serving as Vice Chair of ISHEP, promoting racial harmony through education and professional development."
   },
   {
     id: 3,
     name: "MELECIA SENIOR",
     title: "Secretary",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop",
-    description: "Melecia is a dedicated physics teacher with nearly 10 years of experience, passionate about not just education but also inspiring change in the lives of those around her. She believes in the power of critical thinking, creativity, and mentorship to help others grow and reach their full potential.\n\nBeyond the classroom, Melecia is an active member of her local church's youth group, where she supports and guides young people in their personal and spiritual journeys. With a background in medical physics and a love for problem-solving, she enjoys exploring the intersection of science, creativity, and human connection.\n\nWhether through teaching, coding, singing, or painting, Melecia is driven by a deep desire to uplift others and create meaningful change in her community. She strives to make learning, and life, an inspiring and transformative experience for all."
+    image: images.melecia,
+    description: "Melecia is a dedicated physics teacher passionate about education and mentorship. She supports youth in her church and enjoys exploring science, creativity, and human connection to uplift her community."
   },
   {
     id: 4,
     name: "GLORIA BONDE",
     title: "Board Member",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop",
-    description: "Gloria works in the Adult Social Care sector, where she brings over six years of experience supporting individuals impacted by domestic abuse and sexual violence. With a background in psychology and criminology, Gloria is deeply committed to advocating for vulnerable communities.\n\nOriginally from the Democratic Republic of Congo, Gloria spent her formative years in Italy and has called the UK home for over a decade. Her multicultural background gives her a unique perspective and a deep sensitivity to social equity, inclusion, and the intersections of identity and justice.\n\nKnown for her calm presence and active listening, Gloria is driven by a strong sense of purpose shaped by her Christian faith. She believes in walking alongside others with empathy and grace, ensuring every person is treated with dignity.\n\nOutside of work, Gloria enjoys staying active—she loves long walks, learning new skills, and spending quality time with her family."
+    image: images.Gloria,
+    description: "Gloria works in Adult Social Care, supporting survivors of domestic abuse and sexual violence. With a multicultural background, she advocates for equity and inclusion, driven by empathy and her Christian faith."
   }
 ];
 
@@ -469,21 +491,28 @@ export const testimonials = [
       'You will work with new and interesting people as part of a friendly and professional team, building and supported by a national network.',
     name: 'Trustee 1',
     title: 'Current Trustee',
-    image: 'https://via.placeholder.com/150/0000FF/FFFFFF?text=T1', // Placeholder Image
+    image: images.trust1,
   },
   {
     quote:
       'Your life experience is as valuable as any formal skills or qualifications.',
     name: 'Trustee 2',
     title: 'Former Trustee',
-    image: 'https://via.placeholder.com/150/FF0000/FFFFFF?text=T2', // Placeholder Image
+    image: images.trust2,
   },
   {
     quote:
       'What the staff and volunteers will achieve is incredible, and you will get great personal satisfaction from being involved as a trustee.',
     name: 'Trustee 3',
     title: 'Advisory Board',
-    image: 'https://via.placeholder.com/150/008000/FFFFFF?text=T3', // Placeholder Image
+    image: images.trust3,
+  },
+   {
+    quote:
+      'What the staff and volunteers will achieve is incredible, and you will get great personal satisfaction from being involved as a trustee.',
+    name: 'Trustee 3',
+    title: 'Advisory Board',
+    image: images.trust4,
   },
 ];
 

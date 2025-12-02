@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { navMenus } from '../data/data';
+import images from '../../assets/images';
 
 
 const ManagmentAndStaff = () => {
@@ -249,13 +250,25 @@ const ManagmentAndStaff = () => {
     </div>
 
     {/* RIGHT SIDE IMAGE */}
-    <div className="w-full flex justify-center lg:justify-end">
+<div className="w-auto flex justify-center lg:justify-end">
+  <div className="relative p-[3px] rounded-xl overflow-hidden">
+    
+    {/* Animated gradient border */}
+    <div className="absolute inset-0 bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] animate-spin-slow"></div>
+
+    {/* Image wrapper */}
+    <div className="relative rounded-xl overflow-hidden">
       <img
-        src=""
+        src={images.managementStaff}
         alt="STEM Training"
-        className="w-full max-w-md rounded-xl shadow-xl object-cover"
+        className="w-auto max-w-md rounded-xl shadow-xl object-cover"
       />
     </div>
+
+  </div>
+</div>
+
+
   </div>
 </section>
 

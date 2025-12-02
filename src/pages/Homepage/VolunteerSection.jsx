@@ -5,13 +5,19 @@ import { Link } from "react-router-dom";
 
 const VolunteerSection = () => {
   return (
-    <section
-      className="py-20 bg-gray-50 bg-cover bg-center relative"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(252, 251, 251, 0.85), rgba(255,255,255,0.9)), url(https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80)",
-      }}
-    >
+    <section className="py-20 bg-gray-50 relative">
+
+  {/* Background Image */}    
+  <div className="absolute inset-0 w-full h-full overflow-hidden">
+    <img
+      src=""
+      alt="background"
+      className="w-full h-full object-cover"
+    />
+    
+    {/* White Gradient Overlay */}
+    <div className="absolute inset-0 bg-white/80 backdrop-blur-[2px]" />
+  </div>
       <div className="container mx-auto px-6 text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}

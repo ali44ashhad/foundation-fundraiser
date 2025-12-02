@@ -110,7 +110,7 @@ const WhyDonation = () => {
             viewport={{ once: true, amount: 0.28 }}
             variants={staggerContainer}
           >
-            <div className="flex flex-col lg:flex-row gap-6 items-start lg:items-center">
+            <div className="lg:items-center">
               {/* left 70% -> span 7/10 */}
               <motion.div
                 className=" m-auto lg:w-7/10 pt-10"
@@ -230,13 +230,13 @@ const WhyDonation = () => {
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
-                      placeholder="Enter amount in £"
+                      placeholder=" Enter amount in £"
                       value={otherAmount}
                       onChange={(e) => {
                         const v = e.target.value.replace(/[^0-9]/g, "");
                         setOtherAmount(v);
                       }}
-                      className="w-full p-3 rounded-lg border border-gray-300 text-xl focus:ring-2 focus:outline-none"
+                      className="w-full p-3 rounded-lg border border-gray-300 text-gray-500 text-xl focus:ring-2 focus:outline-none"
                       aria-label="Custom donation amount"
                       variants={smallPop(0.4)}
                     />

@@ -23,6 +23,8 @@ import Volunteer from "./pages/morePages/Volunteer";
 import ContactUs from "./pages/ContactUs";
 import TermsOfUse from "./pages/TermsOfUse";
 import Complaints from "./pages/Complaints";
+import FreeData from "./pages/morePages/FreeData";
+import DeviceBank from "./pages/morePages/DeviceBank";
 
 
 
@@ -64,6 +66,8 @@ const App = () => {
         <Route path='/trust-vacancies' element={<TrustVacancies/>}/>
         <Route path='/management-staff' element={<ManagmentAndStaff/>}  />
         <Route path='/volunteer' element={<Volunteer/>}/>
+        <Route path='/free-data-1' element={<FreeData/>}/>
+        <Route path='/device-bank' element={<DeviceBank/>}/>
       </Routes>
 
       <Footer />
