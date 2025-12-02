@@ -70,7 +70,7 @@ import philanthropist4 from './philanthropist/philanthropist4.png'
 
 
 // contact page //
-import contactImage from './contact/contactleftimage.png'
+import contactImage from './contact/contactimage.png'
 
 // managment staff //
 import managementStaff from './vacancies/managmentstaffimage.png'

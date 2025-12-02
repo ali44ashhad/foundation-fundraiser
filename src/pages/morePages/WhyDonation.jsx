@@ -227,9 +227,9 @@ const WhyDonation = () => {
                   <motion.div className="col gap-2 w-full" variants={staggerContainer}>
                     <motion.input
                       id="custom-donation"
-                      type="text"
+                      type="number"
                       inputMode="numeric"
-                      pattern="[0-9]*"
+                      pattern="[0-9]"
                       placeholder=" Enter amount in £"
                       value={otherAmount}
                       onChange={(e) => {

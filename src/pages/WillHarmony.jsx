@@ -149,7 +149,7 @@ const WillHarmony = () => {
             </motion.h2>
 
             <motion.p
-              className="mt-3 text-base sm:text-lg text-black max-w-3xl mx-auto leading-relaxed"
+              className="mt-3 text-base sm:text-lg text-black max-w-6xl mx-auto leading-relaxed"
               variants={fadeUp}
             >
               Believe it or not, each and every one of us weaves a unique thread,
@@ -162,34 +162,36 @@ const WillHarmony = () => {
           </motion.div>
 
           {/* 4 image blocks — responsive grid */}
-          <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                 { id: 1, img: images.gift1 },
-                 { id: 2, img: images.gift2 },
-                 { id: 3, img: images.gift3 },
-                 { id: 4, img: images.gift4 }].map((item, index) => (
-                   <motion.div
-                     key={item.id}
-                     variants={fadeUp}
-                     initial="hidden"
-                     whileInView="visible"
-                     viewport={{ once: true }}
-                     className=" h-58 w-full transition-all duration-300"
-                   >
-                     <img
-                       src={item.img}
-                       alt="Gallery Image"
-                       className="w-full h-full object-contain transform transition duration-500 hover:scale-105"
-                     />
-                  </motion.div>
+      {/* Grid: 1 col mobile, 2 sm, 3 md, 4 lg */}
+     <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center lg:items-start justify-center gap-4">
+  {[
+    { id: 1, img: images.gift1, alt: "Gift 1" },
+    { id: 2, img: images.gift2, alt: "Gift 2" },
+    { id: 3, img: images.gift3, alt: "Gift 3" },
+    { id: 4, img: images.gift4, alt: "Gift 4" },
+  ].map((item) => (
+    <motion.div
+      key={item.id}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      className="
+        w-auto  
+        h-48 flex items-center justify-center 
+         rounded-xl 
+      "
+    >
+      <img
+        src={item.img}
+        alt={item.alt}
+        loading="lazy"
+        className="w-full h-full object-contain sm:w-auto transition-transform duration-300 ease-out hover:scale-105"
+        draggable={false}
+      />
+    </motion.div>
+  ))}
+</div>
 
-                ))}
-
-
-
-            </div>
-          </div>
         </motion.section>
 
         {/* Gift detail sections (left/right alternating) */}

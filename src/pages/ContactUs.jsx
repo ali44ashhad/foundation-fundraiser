@@ -114,7 +114,7 @@ const ContactUs = () => {
           {/* Main Grid: Image + Form */}
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left: Image / Graphic block */}
-            <div className="relative h-64 lg:h-auto bg-gray-200 flex items-center justify-center p-4 rounded-b-2xl lg:rounded-b-none lg:rounded-br-none lg:rounded-l-3xl overflow-hidden">
+            <div className="relative h-64 lg:h-auto flex items-center justify-center p-4 rounded-b-2xl lg:rounded-b-none lg:rounded-br-none lg:rounded-l-3xl overflow-hidden">
                 <img
                   src={images.contactImage}
                   alt="Illustration of contact or meeting"
@@ -149,7 +149,7 @@ const ContactUs = () => {
                         required
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#AFDE00] transition duration-150"
+                        className="w-full p-3 border-2 text-gray-700 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#AFDE00] transition duration-150"
                         placeholder="Enter first name"
                       />
                     </div>
