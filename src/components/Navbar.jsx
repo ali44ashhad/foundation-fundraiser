@@ -34,67 +34,89 @@ const mainMenuItems = [
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState(null);
+  const [isVacanciesOpen, setIsVacanciesOpen] = useState(false);
 
-  const moreMenuRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target)) {
-        setIsMoreOpen(false);
-        setOpenSubmenu(null);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('touchstart', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('touchstart', handleClickOutside);
-    };
-  }, []);
+  // refs for detecting outside clicks
+  const navRef = useRef(null); // whole nav area
+  const moreDropdownRef = useRef(null); // desktop more dropdown
+  const mobilePanelRef = useRef(null); // mobile panel
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
     if (isMobileMenuOpen) {
       setIsMoreOpen(false);
-      setOpenSubmenu(null);
+      setIsVacanciesOpen(false);
     }
   };
 
-  const toggleMoreMenu = (e) => {
-    e.stopPropagation();
+  const toggleMoreMenu = () => {
     setIsMoreOpen(prev => !prev);
-    setOpenSubmenu(null);
+    setIsVacanciesOpen(false);
   };
 
-  const toggleSubmenu = (name, e) => {
-    e.stopPropagation();
-    setOpenSubmenu(prev => (prev === name ? null : name));
+  const toggleVacancies = () => {
+    setIsVacanciesOpen(prev => !prev);
   };
 
   const closeAllMenus = () => {
     setIsMobileMenuOpen(false);
     setIsMoreOpen(false);
-    setOpenSubmenu(null);
+    setIsVacanciesOpen(false);
   };
+
+  // Close menus on click outside (works for desktop & mobile)
+  useEffect(() => {
+    function handleDocumentClick(e) {
+      const target = e.target;
+
+      // If mobile panel is open and click inside it, do nothing
+      if (isMobileMenuOpen) {
+        if (mobilePanelRef.current && mobilePanelRef.current.contains(target)) {
+          return;
+        }
+        // clicked outside mobile panel -> close everything
+        closeAllMenus();
+        return;
+      }
+
+      // If More dropdown is open, check if click was outside dropdown and outside the More button
+      if (isMoreOpen) {
+        const dropdownEl = moreDropdownRef.current;
+        const navEl = navRef.current;
+        // if click inside dropdown or inside nav (so clicks on More button itself are allowed), ignore
+        if (dropdownEl && (dropdownEl.contains(target) || (navEl && navEl.contains(target) && !dropdownEl.contains(target)))) {
+          // click occurred inside nav - do not auto-close
+          return;
+        }
+        // otherwise clicked outside -> close more and vacancies
+        setIsMoreOpen(false);
+        setIsVacanciesOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleDocumentClick);
+    return () => document.removeEventListener('mousedown', handleDocumentClick);
+  }, [isMoreOpen, isMobileMenuOpen]);
 
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed w-full bg-white backdrop-blur-sm z-50 transition-colors duration-300">
+      <nav ref={navRef} className="fixed w-full bg-white backdrop-blur-sm z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
 
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <a href="#" className="flex items-center">
-                <img
-                  src={images.companyLogo}
-                  alt="Logo"
-                  className="h-16 md:h-20 w-auto object-contain"
-                />
-              </a>
-            </div>
+            <img
+  src={images.companyLogo}
+  alt="Logo"
+  className="
+    h-14 w-auto           
+    sm:h-10               
+    md:h-18               
+    lg:h-13               
+    object-contain
+  "
+/>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex lg:items-center lg:space-x-6">
@@ -102,56 +124,66 @@ const Navbar = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-black hover:text-pink-600 px-3 py-2 text-sm md:text-base font-semibold transition duration-150"
+                  className="text-black hover:text-pink-600 px-3 py-2 text-sm font-semibold transition duration-150"
                 >
                   {item.name}
                 </a>
               ))}
 
               {/* More Menu */}
-              <div ref={moreMenuRef} className="relative">
+              <div className="relative">
                 <button
                   onClick={toggleMoreMenu}
-                  className="text-black px-3 py-2 text-sm md:text-base font-medium flex items-center"
+                  className="text-black px-3 py-2 text-sm font-medium flex items-center"
+                  aria-expanded={isMoreOpen}
+                  aria-controls="more-dropdown"
                 >
                   More <ChevronRight className={`ml-1 h-4 w-4 transform transition-transform ${isMoreOpen ? 'rotate-90' : ''}`} />
                 </button>
 
                 {isMoreOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-64 md:w-60 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-20">
+                  <div
+                    id="more-dropdown"
+                    ref={moreDropdownRef}
+                    className="absolute right-0 top-full mt-2 w-60 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-20"
+                  >
                     {moreDropdownItems.map(item => (
                       <div key={item.name} className="relative">
-                        {item.submenu ? (
-                          <>
-                            <button
-                              onClick={(e) => toggleSubmenu(item.name, e)}
-                              className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 flex justify-between items-center"
-                            >
-                              {item.name}
-                              <ChevronRight className={`h-4 w-4 transform transition-transform ${openSubmenu === item.name ? 'rotate-90' : ''}`} />
-                            </button>
-
-                            {item.submenu && openSubmenu === item.name && (
-                              <div className="absolute left-full top-0 ml-1 w-64 md:w-60 rounded-lg shadow-2xl bg-white ring-1 ring-black ring-opacity-5 z-30">
-                                {item.submenu.map(subItem => (
-                                  <a
-                                    key={subItem.name}
-                                    href={subItem.href}
-                                    className="block px-4 py-2 text-sm md:text-base text-gray-700 hover:bg-gray-100"
-                                  >
-                                    {subItem.name}
-                                  </a>
-                                ))}
-                              </div>
-                            )}
-                          </>
-                        ) : (
+                        <div className="w-full flex justify-between items-center">
+                          {/* If item has submenu, clicking the text will open the submenu (prevent default). */}
                           <a
-                            href={item.href}
-                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm md:text-base"
+                            href={item.href || '#'}
+                            onClick={item.submenu ? (e) => { e.preventDefault(); toggleVacancies(); } : undefined}
+                            className="flex-1 px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
                           >
                             {item.name}
                           </a>
+
+                          {item.submenu && (
+                            <button
+                              onClick={toggleVacancies}
+                              className="px-2"
+                              aria-expanded={isVacanciesOpen}
+                              aria-controls="vacancies-submenu"
+                            >
+                              <ChevronRight className={`h-4 w-4 transform transition-transform ${isVacanciesOpen ? 'rotate-90' : ''}`} />
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Vacancies Submenu */}
+                        {item.submenu && isVacanciesOpen && (
+                          <div id="vacancies-submenu" className="absolute left-full top-0 ml-1 w-60 rounded-lg shadow-2xl bg-white ring-1 ring-black ring-opacity-5 z-30">
+                            {item.submenu.map(subItem => (
+                              <a
+                                key={subItem.name}
+                                href={subItem.href}
+                                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                              >
+                                {subItem.name}
+                              </a>
+                            ))}
+                          </div>
                         )}
                       </div>
                     ))}
@@ -165,7 +197,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-lime-500 to-pink-600 text-white rounded-tl-3xl rounded-br-3xl hover:rounded-xl px-4 md:px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base"
+                className="bg-gradient-to-r from-lime-500 to-pink-600 text-black rounded-tl-3xl rounded-br-3xl hover:rounded-xl px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base"
               >
                 Donate Now
               </motion.button>
@@ -186,19 +218,21 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay (still present so user sees overlay) */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={closeAllMenus} />
+        <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" aria-hidden="true" />
       )}
 
       {/* Mobile Menu Panel */}
       <div
-        className={`fixed top-0 right-0 h-screen w-full sm:w-3/4 md:w-2/3 lg:hidden bg-black/95 backdrop-blur-md z-40 transition-transform duration-300 ease-out ${
+        ref={mobilePanelRef}
+        className={`fixed top-0 right-0 h-screen w-1/2 bg-black/95 backdrop-blur-md z-40 lg:hidden transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="pt-24 pb-6 h-full overflow-y-auto flex flex-col">
           <div className="flex-1 px-4 space-y-2">
+            {/* Main Menu */}
             {mainMenuItems.map(item => (
               <a
                 key={item.name}
@@ -210,10 +244,10 @@ const Navbar = () => {
               </a>
             ))}
 
-            {/* Mobile More Section */}
+            {/* More Section */}
             <div className="border-t border-gray-700 pt-3 mt-3">
               <button
-                onClick={(e) => { e.stopPropagation(); setIsMoreOpen(prev => !prev); setOpenSubmenu(null); }}
+                onClick={toggleMoreMenu}
                 className="flex justify-between items-center w-full px-4 py-3 rounded-lg text-base font-medium text-white hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
               >
                 More
@@ -223,44 +257,38 @@ const Navbar = () => {
               {isMoreOpen && (
                 <div className="space-y-1 mt-2">
                   {moreDropdownItems.map(item => (
-                    <div key={item.name}>
-                      {item.submenu ? (
-                        <>
-                          <button
-                            onClick={(e) => toggleSubmenu(item.name, e)}
-                            className={`flex justify-between items-center w-full px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ${
-                              openSubmenu === item.name
-                                ? 'text-green-300 bg-gray-800/50'
-                                : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50'
-                            }`}
-                          >
-                            {item.name}
-                            <ChevronRight className={`h-4 w-4 transform transition-transform duration-300 ${openSubmenu === item.name ? 'rotate-90' : 'rotate-0'}`} />
-                          </button>
-
-                          {openSubmenu === item.name && (
-                            <div className="space-y-1 mt-2 border-l border-gray-600">
-                              {item.submenu.map(subItem => (
-                                <a
-                                  key={subItem.name}
-                                  href={subItem.href}
-                                  className="block px-4 py-2 rounded-lg text-xs md:text-sm font-medium text-gray-400 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
-                                  onClick={closeAllMenus}
-                                >
-                                  {subItem.name}
-                                </a>
-                              ))}
-                            </div>
-                          )}
-                        </>
-                      ) : (
+                    <div key={item.name} className="flex flex-col">
+                      <div className="flex justify-between items-center w-full">
+                        {/* Mobile: clicking the text opens vacancies if submenu exists */}
                         <a
-                          href={item.href}
-                          className="block px-4 py-2 rounded-lg text-sm md:text-base font-medium text-gray-300 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
-                          onClick={closeAllMenus}
+                          href={item.href || '#'}
+                          onClick={item.submenu ? (e) => { e.preventDefault(); setIsVacanciesOpen(prev => !prev); } : closeAllMenus}
+                          className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ${
+                            isVacanciesOpen ? 'text-green-300 bg-gray-800/50' : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50'
+                          }`}
                         >
                           {item.name}
                         </a>
+                        {item.submenu && (
+                          <button onClick={() => setIsVacanciesOpen(prev => !prev)} className="px-2">
+                            <ChevronRight className={`h-4 w-4 transform transition-transform duration-300 ${isVacanciesOpen ? 'rotate-90' : 'rotate-0'}`} />
+                          </button>
+                        )}
+                      </div>
+
+                      {item.submenu && isVacanciesOpen && (
+                        <div className="space-y-1 mt-2 border-l border-gray-600">
+                          {item.submenu.map(subItem => (
+                            <a
+                              key={subItem.name}
+                              href={subItem.href}
+                              className="block px-4 py-2 rounded-lg text-xs font-medium text-gray-400 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
+                              onClick={closeAllMenus}
+                            >
+                              {subItem.name}
+                            </a>
+                          ))}
+                        </div>
                       )}
                     </div>
                   ))}
@@ -287,8 +315,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
 
 
 
