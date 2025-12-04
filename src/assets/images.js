@@ -29,7 +29,7 @@ import gift4 from './harmony/Specific-gift.avif'
 
 
 // stem //
-import stemRight from './stem/stemright.png'
+import stemRight from './stem/stemimage.png'
 
 
 // data device //

@@ -7,100 +7,78 @@ const ManagmentAndStaff = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
 
+    // Function to close the desktop dropdown
+    const handleMouseLeave = () => {
+        setOpenIndex(null);
+    };
+
     return (
         <>
-            <div className=" bg-gray-50 font-sans py-30">
-                <div className="max-w-7xl mx-auto">
+            <div className="bg-gray-50 font-sans py-10 md:py-30">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* --- Navigation Bar (Header) --- */}
-                    <header className="py-4 border-b border-gray-200">
-                        <nav className="flex items-center justify-end">
-                            {/* Desktop Menu (Visible on medium screens and up) */}
-                            <div className="hidden md:flex space-x-8">
-                                {navMenus.map((menu, index) => (
-                                    // wrapper for relative positioning of dropdown
-                                    <div key={index} className="relative text-gray-700">
-                                        <button
-                                            onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                            onMouseEnter={() => setOpenIndex(index)}
-                                            className="flex items-center text-sm font-medium hover:text-indigo-600 transition duration-150 p-2 rounded-md"
-                                            aria-haspopup="true"
-                                            aria-expanded={openIndex === index}
-                                        >
-                                            {menu.title}
-                                            {/* Chevron Icon */}
-                                            <svg
-                                                className={`ml-1 w-4 h-4 transform transition-transform duration-200 ${openIndex === index ? "rotate-180" : "rotate-0"}`}
-                                                fill="none"
-                                                stroke="currentColor"
-                                                viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                                            </svg>
-                                        </button>
+{/* --- Navigation Bar (Header) --- */}
+<header className="py-4 border-b border-gray-200">
+  <nav className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-3">
+    
+    {/* Logo */}
+    <div className="text-xl font-bold text-gray-800">ISHEP</div>
 
-                                        {/* Dropdown Content */}
-                                        {openIndex === index && (
-                                            <div
-                                                className="absolute z-30 mt-2 w-48 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden"
-                                                onMouseLeave={() => setOpenIndex(null)}
-                                                onFocus={() => { }} // placeholder to satisfy a11y tools if needed
-                                            >
-                                                <div className="py-2">
-                                                    {menu.points.map((point, pIndex) => (
-                                                        <a
-                                                            key={pIndex}
-                                                            href="#"
-                                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition duration-150"
-                                                        >
-                                                            {point}
-                                                        </a>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
+    {/* SAME MENU ON ALL SCREENS */}
+    <div className="flex flex-wrap items-start gap-3 sm:gap-8">
+      {navMenus.map((menu, index) => (
+        <div key={index} className="relative text-gray-700">
+          
+          {/* BUTTON */}
+          <button
+            onClick={() => setOpenIndex(openIndex === index ? null : index)}
+            className="flex items-center text-sm font-medium hover:text-indigo-600 transition p-2 rounded-md"
+          >
+            {menu.title}
+            <svg
+              className={`ml-1 w-4 h-4 transform transition-transform duration-200 ${
+                openIndex === index ? "rotate-180" : "rotate-0"
+              }`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
 
-                            {/* Mobile Menu Button (Visible on small screens) */}
-                            <button
-                                className="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-200 transition duration-150"
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                aria-label="Toggle menu"
-                            >
-                                {isMobileMenuOpen ? (
-                                    // Close Icon (X)
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                ) : (
-                                    // Hamburger Icon
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                                    </svg>
-                                )}
-                            </button>
-                        </nav>
+          {/* FIXED DROPDOWN (NO EXTRA SPACE) */}
+          <div
+            className={`${
+              openIndex === index ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
+            } 
+              absolute left-0 top-full mt-2 w-auto
+              
+              transition-all duration-200 origin-top z-30
+            `}
+          >
+            <div className="bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden">
+              {menu.points.map((point, pIndex) => (
+                <a
+                  key={pIndex}
+                  href="#"
+                  onClick={() => setOpenIndex(null)}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                >
+                  {point}
+                </a>
+              ))}
+            </div>
+          </div>
 
-                        {/* Mobile Dropdown Menu (Conditionally rendered) */}
-                        {isMobileMenuOpen && (
-                            <div className="md:hidden mt-4 space-y-2 bg-white p-4 rounded-xl shadow-lg border border-gray-100">
-                                {navMenus.map((menu, index) => (
-                                    <div key={index} className="border-b border-gray-100 pb-2">
-                                        <h3 className="font-semibold text-gray-800 pt-2">{menu.title}</h3>
-                                        <ul className="pl-4 pt-1 space-y-1 text-sm text-gray-600">
-                                            {menu.points.map((point, pIndex) => (
-                                                <li key={pIndex} className="hover:text-indigo-600 transition duration-100 cursor-pointer">
-                                                    - {point}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </header>
+        </div>
+      ))}
+    </div>
+
+  </nav>
+</header>
+
+
 
                     {/* --- Main Content Section (Job Details) --- */}
                     <main className="mt-12 p-4 md:p-8 bg-white rounded-2xl shadow-xl">
@@ -168,109 +146,121 @@ const ManagmentAndStaff = () => {
 
 
             {/* second section */}
-
             {/* ------------------ MANAGEMENT SECTION ------------------ */}
-            <section className="space-y-10 w-full bg-gray-50 py-10">
+            <section className="py-10 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    {/* MODIFICATION 2: Adjusted max-width for content to match nav */}
+                 <div className="max-w-7xl mx-auto space-y-6 px-4 sm:px-6">
+  <h2
+    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold
+               bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000]
+               bg-clip-text text-transparent leading-tight break-words"
+    style={{ hyphens: "auto" }}
+  >
+    Our Management
+  </h2>
 
-                <div className='w-6xl m-auto'>
-                    <h2
-                        className="text-3xl md:text-6xl font-semibold bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] bg-clip-text text-transparent"
-                    >
-                        Our Management
-                    </h2>
+  <p className="text-base sm:text-lg md:text-lg text-black leading-relaxed whitespace-normal break-words text-justify">
+    Our management and staff are carefully selected first by our senior management team,
+    and then by the managers of each department. Our management and staff are in post in
+    one of the following capacities: Fixed Contract, Rolling Contract, or Permanent.
+  </p>
 
-                    <p className="leading-relaxed text-base text-black md:text-lg py-3">
-                        Our management and staff are carefully selected first by our senior management team,
-                        and then by the managers of each department. Our management and staff are in post in
-                        one of the following capacities: Fixed Contract, Rolling Contract, or Permanent.
-                        <br /><br />
-                        Senior management steers our strategic direction. Their primary role is to ensure that we
-                        fulfil our charitable objectives and that the income we receive is applied effectively.
-                    </p>
-                    <h2
-                        className="text-3xl md:text-5xl font-semibold bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] bg-clip-text text-transparent pt-10 pb-2"
-                    >
-                        ISHEP is looking for passionate individuals to join our management and staff team!
-                    </h2>
+  <p className="text-base sm:text-lg text-gray-700 leading-relaxed whitespace-normal break-words text-justify">
+    Senior management steers our strategic direction. Their primary role is to ensure that we
+    fulfil our charitable objectives and that the income we receive is applied effectively.
+  </p>
 
-                    {/* Paragraph 2 */}
-                    <p className="text-gray-700 leading-relaxed text-base md:text-lg">
-                        As a member of the team, you will play a vital role in shaping the future of ISHEP.
-                        Our CEO and the board members are responsible for setting the strategic direction
-                        of the organisation, ensuring sound governance, and overseeing financial and
-                        operational performance.
-                        <br /><br />
-                        The management team work alongside the CEO, who leads the day-to-day delivery of
-                        services, to ensure we continue to provide high-quality, accessible advice and support
-                        to the people who need it most, while delivering a social enterprise community division.
-                        <br /><br />
-                        Being a member of the team, in both capacity management and staff, is an opportunity to
-                        use your skills and experience to make a meaningful impact in the community. Whether you
-                        bring lived experience or expertise in equity, diversity, and inclusion, communications,
-                        digital or legal knowledge, your contribution will help ISHEP grow and adapt to meet new
-                        challenges.
-                    </p>
+  <h3
+    className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold
+               bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000]
+               bg-clip-text text-transparent pt-4 break-words"
+    style={{ hyphens: "auto" }}
+  >
+    ISHEP is looking for passionate individuals to join our management and staff team!
+  </h3>
 
+  <div className="text-base sm:text-lg text-gray-700 leading-relaxed space-y-4 whitespace-normal break-words">
+    <p className="text-justify">
+      As a member of the team, you will play a vital role in shaping the future of ISHEP.
+      Our CEO and the board members are responsible for setting the strategic direction
+      of the organisation, ensuring sound governance, and overseeing financial and
+      operational performance.
+    </p>
+
+    <p className="text-justify">
+      The management team work alongside the CEO, who leads the day-to-day delivery of
+      services, to ensure we continue to provide high-quality, accessible advice and support
+      to the people who need it most, while delivering a social enterprise community division.
+    </p>
+
+    <p className="text-justify">
+      Being a member of the team, in both capacity management and staff, is an opportunity to
+      use your skills and experience to make a meaningful impact in the community. Whether you
+      bring lived experience or expertise in equity, diversity, and inclusion, communications,
+      digital or legal knowledge, your contribution will help ISHEP grow and adapt to meet new
+      challenges.
+    </p>
+  </div>
+</div>
 
                 </div>
             </section>
 
 
             {/* third section */}
-              <section className="w-full py-16 bg-white">
-  <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-    
-    {/* LEFT SIDE */}
-    <div className="space-y-6">
-      <h2 className="text-4xl font-bold text-gray-900">
-        Empowering the Next Generation Through STEM
-      </h2>
+            <section className="w-full py-16 bg-white">
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-      <p className="text-lg text-gray-700 leading-relaxed">
-        STEM training has a profoundly positive impact on young people aged 16-25. 
-        It empowers them with the skills and confidence needed to succeed in a 
-        competitive job market.
-      </p>
+                    {/* LEFT SIDE */}
+                    <div className="space-y-6">
+                        <h2 className="text-4xl font-bold text-gray-900">
+                            Empowering the Next Generation Through STEM
+                        </h2>
 
-      <p className="text-lg text-gray-700 leading-relaxed">
-        By engaging in STEM training, young people develop critical thinking, 
-        problem-solving, and analytical skills that are highly valued by employers. 
-        Moreover, STEM training nurtures creativity and innovation, encouraging young 
-        people to think outside the box and develop new solutions to complex problems.
-      </p>
+                        <p className="text-lg text-gray-700 leading-relaxed">
+                            STEM training has a profoundly positive impact on young people aged 16-25.
+                            It empowers them with the skills and confidence needed to succeed in a
+                            competitive job market.
+                        </p>
 
-      {/* BUTTON */}
-      <button
-        className="mt-4 px-8 py-3 font-semibold text-white rounded-full shadow-lg 
-        bg-gradient-to-r from-[#B2DF0A] via-[#E70C80] to-[#FF850B] 
-        hover:opacity-90 transition-all duration-300"
-      >
-        Apply Now
-      </button>
-    </div>
+                        <p className="text-lg text-gray-700 leading-relaxed">
+                            By engaging in STEM training, young people develop critical thinking,
+                            problem-solving, and analytical skills that are highly valued by employers.
+                            Moreover, STEM training nurtures creativity and innovation, encouraging young
+                            people to think outside the box and develop new solutions to complex problems.
+                        </p>
 
-    {/* RIGHT SIDE IMAGE */}
-<div className="w-auto flex justify-center lg:justify-end">
-  <div className="relative p-[3px] rounded-xl overflow-hidden">
-    
-    {/* Animated gradient border */}
+                        {/* BUTTON */}
+                        <button
+                            className="mt-4 px-8 py-3 font-semibold text-white rounded-full shadow-lg 
+                            bg-gradient-to-r from-[#B2DF0A] via-[#E70C80] to-[#FF850B] 
+                            hover:opacity-90 transition-all duration-300"
+                        >
+                            Apply Now
+                        </button>
+                    </div>
+
+                    {/* RIGHT SIDE IMAGE */}
+                    <div className="w-auto flex justify-center lg:justify-end">
+                        <div className="relative p-[3px] rounded-xl overflow-hidden">
+
     <div className="absolute inset-0 bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] animate-spin-slow"></div>
+                            {/* Image wrapper */}
+                            <div className="relative rounded-xl overflow-hidden">
+                                <img
+                                    src={images.managementStaff}
+                                    alt="STEM Training"
+                                    className="w-auto max-w-full md:max-w-md rounded-xl shadow-xl object-cover" 
+                                />
+                            </div>
 
-    {/* Image wrapper */}
-    <div className="relative rounded-xl overflow-hidden">
-      <img
-        src={images.managementStaff}
-        alt="STEM Training"
-        className="w-auto max-w-md rounded-xl shadow-xl object-cover"
-      />
-    </div>
-
-  </div>
-</div>
+                        </div>
+                    </div>
 
 
-  </div>
-</section>
+                </div>
+            </section>
 
         </>
     )

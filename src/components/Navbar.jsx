@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import images from '../assets/images';
@@ -19,12 +19,8 @@ const moreDropdownItems = [
   { name: 'Data And Device', href: '/data-device' },
   { name: 'Meet the team', href: '/team-members' },
   { name: 'The Launch', href: '/launch' },
-  { 
-    name: 'Vacancies', 
-    href: '#vacancies', 
-    submenu: vacanciesSubmenu 
-  },
-  { name: 'Contact Us', href: '/contact-us'}
+  { name: 'Vacancies', href: '#vacancies', submenu: vacanciesSubmenu },
+  { name: 'Contact Us', href: '/contact-us' },
 ];
 
 const mainMenuItems = [
@@ -35,110 +31,144 @@ const mainMenuItems = [
   { name: 'A Will for Harmony', href: '/harmony' },
 ];
 
-const App = () => {
+const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
-  const [isVacanciesSubmenuOpen, setIsVacanciesSubmenuOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
 
-  const logoPlaceholder = 'bg-black flex items-center justify-center';
+  const moreMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target)) {
+        setIsMoreOpen(false);
+        setOpenSubmenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(prev => !prev);
     if (isMobileMenuOpen) {
-      setIsMobileMoreOpen(false);
-      setIsVacanciesSubmenuOpen(false);
+      setIsMoreOpen(false);
+      setOpenSubmenu(null);
     }
   };
 
-  const toggleMobileMore = () => {
-    setIsMobileMoreOpen(prev => !prev);
-    setIsVacanciesSubmenuOpen(false);
+  const toggleMoreMenu = (e) => {
+    e.stopPropagation();
+    setIsMoreOpen(prev => !prev);
+    setOpenSubmenu(null);
   };
 
-  const toggleVacanciesSubmenu = () => {
-    setIsVacanciesSubmenuOpen(prev => !prev);
+  const toggleSubmenu = (name, e) => {
+    e.stopPropagation();
+    setOpenSubmenu(prev => (prev === name ? null : name));
   };
-  
-  const closeAllMobile = () => {
+
+  const closeAllMenus = () => {
     setIsMobileMenuOpen(false);
-    setIsMobileMoreOpen(false);
-    setIsVacanciesSubmenuOpen(false);
+    setIsMoreOpen(false);
+    setOpenSubmenu(null);
   };
 
   return (
     <>
+      {/* Navigation */}
       <nav className="fixed w-full bg-white backdrop-blur-sm z-50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo Section */}
-       <div className="flex-shrink-0">
-  <a href="#" className="flex items-center">
-    <img
-      src={images.companyLogo}   // <-- put your image import or URL here
-      alt="Logo"
-      className="h-20 w-25 object-contain"
-    />
-  </a>
-</div>
 
+            {/* Logo */}
+            <div className="flex-shrink-0">
+              <a href="#" className="flex items-center">
+                <img
+                  src={images.companyLogo}
+                  alt="Logo"
+                  className="h-16 md:h-20 w-auto object-contain"
+                />
+              </a>
+            </div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex lg:items-center lg:space-x-6">
-              {mainMenuItems.map((item) => (
+              {mainMenuItems.map(item => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-black hover:text-pink-600 px-3 py-2 text-sm font-semibold transition duration-150"
+                  className="text-black hover:text-pink-600 px-3 py-2 text-sm md:text-base font-semibold transition duration-150"
                 >
                   {item.name}
                 </a>
               ))}
 
-              <div className="group relative">
-                <button className="text-black group-hover:text-green-300 px-3 py-2 text-sm font-medium transition duration-150 flex items-center">
-                  More <ChevronRight className="ml-1 h-4 w-4 transform transition-transform group-hover:rotate-90" />
+              {/* More Menu */}
+              <div ref={moreMenuRef} className="relative">
+                <button
+                  onClick={toggleMoreMenu}
+                  className="text-black px-3 py-2 text-sm md:text-base font-medium flex items-center"
+                >
+                  More <ChevronRight className={`ml-1 h-4 w-4 transform transition-transform ${isMoreOpen ? 'rotate-90' : ''}`} />
                 </button>
-                
-                <div className="absolute right-0 top-full hidden group-hover:block pt-4 w-60 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-20 transition-all duration-300 ease-out origin-top-right">
-                  <div className="py-1">
-                    {moreDropdownItems.map((item) => (
-                      <div key={item.name} className="relative group/sub">
-                        <a
-                          href={item.submenu ? '#' : item.href}
-                          className={`block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ${item.submenu ? 'flex justify-between items-center' : ''}`}
-                        >
-                          {item.name}
-                          {item.submenu && <ChevronRight className="h-4 w-4 text-gray-400 group-hover/sub:rotate-90 transition-transform" />}
-                        </a>
-                        
-                        {item.submenu && (
-                          <div className="absolute left-full top-0 ml-1 w-60 rounded-lg shadow-2xl bg-white ring-1 ring-black ring-opacity-5 z-30 hidden group-hover/sub:block">
-                            <div className="py-1">
-                              {item.submenu.map((subItem) => (
-                                <a
-                                  key={subItem.name}
-                                  href={subItem.href}
-                                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                >
-                                  {subItem.name}
-                                </a>
-                              ))}
-                            </div>
-                          </div>
+
+                {isMoreOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-64 md:w-60 rounded-lg shadow-xl bg-white ring-1 ring-black ring-opacity-5 z-20">
+                    {moreDropdownItems.map(item => (
+                      <div key={item.name} className="relative">
+                        {item.submenu ? (
+                          <>
+                            <button
+                              onClick={(e) => toggleSubmenu(item.name, e)}
+                              className="w-full px-4 py-2 text-left text-gray-700 hover:bg-gray-100 flex justify-between items-center"
+                            >
+                              {item.name}
+                              <ChevronRight className={`h-4 w-4 transform transition-transform ${openSubmenu === item.name ? 'rotate-90' : ''}`} />
+                            </button>
+
+                            {item.submenu && openSubmenu === item.name && (
+                              <div className="absolute left-full top-0 ml-1 w-64 md:w-60 rounded-lg shadow-2xl bg-white ring-1 ring-black ring-opacity-5 z-30">
+                                {item.submenu.map(subItem => (
+                                  <a
+                                    key={subItem.name}
+                                    href={subItem.href}
+                                    className="block px-4 py-2 text-sm md:text-base text-gray-700 hover:bg-gray-100"
+                                  >
+                                    {subItem.name}
+                                  </a>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        ) : (
+                          <a
+                            href={item.href}
+                            className="block px-4 py-2 text-gray-700 hover:bg-gray-100 text-sm md:text-base"
+                          >
+                            {item.name}
+                          </a>
                         )}
                       </div>
                     ))}
                   </div>
-                </div>
+                )}
               </div>
-              
-               <div className="hidden md:block">
-           <motion.button initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} 
-           className="rounded-tl-3xl rounded-br-3xl hover:rounded-xl hover:cursor-pointer active: bg-gradient-to-r from-lime-500 to-pink-600 text-white 
-           px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base">
-             Donate Now
-           </motion.button>
-         </div>
+
+              {/* Donate Button */}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="bg-gradient-to-r from-lime-500 to-pink-600 text-white rounded-tl-3xl rounded-br-3xl hover:rounded-xl px-4 md:px-6 py-2.5 font-semibold shadow-2xl hover:shadow-lime-500/25 transition-all text-sm md:text-base"
+              >
+                Donate Now
+              </motion.button>
             </div>
 
             {/* Mobile Menu Button */}
@@ -149,11 +179,7 @@ const App = () => {
                 className="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-green-300 hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-300"
               >
                 <span className="sr-only">Open main menu</span>
-                {isMobileMenuOpen ? (
-                  <X className="block h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Menu className="block h-6 w-6" aria-hidden="true" />
-                )}
+                {isMobileMenuOpen ? <X className="block h-6 w-6" /> : <Menu className="block h-6 w-6" />}
               </button>
             </div>
           </div>
@@ -162,71 +188,64 @@ const App = () => {
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/40 z-40 lg:hidden"
-          onClick={closeAllMobile}
-        />
+        <div className="fixed inset-0 bg-black/40 z-40 lg:hidden" onClick={closeAllMenus} />
       )}
 
-      {/* Mobile Menu Slide-in Panel from Right */}
-      <div 
-        className={`fixed top-0 right-0 h-screen w-1/2 bg-black/95 backdrop-blur-md z-40 lg:hidden transition-transform duration-300 ease-out ${
+      {/* Mobile Menu Panel */}
+      <div
+        className={`fixed top-0 right-0 h-screen w-full sm:w-3/4 md:w-2/3 lg:hidden bg-black/95 backdrop-blur-md z-40 transition-transform duration-300 ease-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Menu Content */}
         <div className="pt-24 pb-6 h-full overflow-y-auto flex flex-col">
           <div className="flex-1 px-4 space-y-2">
-            {/* Main Menu Links */}
-            {mainMenuItems.map((item) => (
+            {mainMenuItems.map(item => (
               <a
                 key={item.name}
                 href={item.href}
                 className="block px-4 py-3 rounded-lg text-base font-medium text-white hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
-                onClick={closeAllMobile}
+                onClick={closeAllMenus}
               >
                 {item.name}
               </a>
             ))}
 
-            {/* More Menu Section */}
+            {/* Mobile More Section */}
             <div className="border-t border-gray-700 pt-3 mt-3">
               <button
-                onClick={toggleMobileMore}
+                onClick={(e) => { e.stopPropagation(); setIsMoreOpen(prev => !prev); setOpenSubmenu(null); }}
                 className="flex justify-between items-center w-full px-4 py-3 rounded-lg text-base font-medium text-white hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
               >
-                More 
-                <ChevronRight className={`h-5 w-5 transform transition-transform duration-300 ${isMobileMoreOpen ? 'rotate-90' : 'rotate-0'}`} />
+                More
+                <ChevronRight className={`h-5 w-5 transform transition-transform duration-300 ${isMoreOpen ? 'rotate-90' : 'rotate-0'}`} />
               </button>
 
-              {/* More Dropdown Items */}
-              {isMobileMoreOpen && (
+              {isMoreOpen && (
                 <div className="space-y-1 mt-2">
-                  {moreDropdownItems.map((item) => (
+                  {moreDropdownItems.map(item => (
                     <div key={item.name}>
                       {item.submenu ? (
                         <>
                           <button
-                            onClick={toggleVacanciesSubmenu}
+                            onClick={(e) => toggleSubmenu(item.name, e)}
                             className={`flex justify-between items-center w-full px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ${
-                              isVacanciesSubmenuOpen
+                              openSubmenu === item.name
                                 ? 'text-green-300 bg-gray-800/50'
                                 : 'text-gray-300 hover:text-green-300 hover:bg-gray-800/50'
                             }`}
                           >
                             {item.name}
-                            <ChevronRight className={`h-4 w-4 transform transition-transform duration-300 ${isVacanciesSubmenuOpen ? 'rotate-90' : 'rotate-0'}`} />
+                            <ChevronRight className={`h-4 w-4 transform transition-transform duration-300 ${openSubmenu === item.name ? 'rotate-90' : 'rotate-0'}`} />
                           </button>
 
-                          {/* Vacancies Submenu */}
-                          {isVacanciesSubmenuOpen && (
+                          {openSubmenu === item.name && (
                             <div className="space-y-1 mt-2 border-l border-gray-600">
-                              {item.submenu.map((subItem) => (
+                              {item.submenu.map(subItem => (
                                 <a
                                   key={subItem.name}
                                   href={subItem.href}
-                                  className="block px-4 py-2 rounded-lg text-xs font-medium text-gray-400 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
-                                  onClick={closeAllMobile}
+                                  className="block px-4 py-2 rounded-lg text-xs md:text-sm font-medium text-gray-400 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
+                                  onClick={closeAllMenus}
                                 >
                                   {subItem.name}
                                 </a>
@@ -237,8 +256,8 @@ const App = () => {
                       ) : (
                         <a
                           href={item.href}
-                          className="block px-4 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
-                          onClick={closeAllMobile}
+                          className="block px-4 py-2 rounded-lg text-sm md:text-base font-medium text-gray-300 hover:text-green-300 hover:bg-gray-800/50 transition duration-150"
+                          onClick={closeAllMenus}
                         >
                           {item.name}
                         </a>
@@ -250,18 +269,16 @@ const App = () => {
             </div>
           </div>
 
-          {/* Mobile Login Button - Sticky at Bottom */}
+          {/* Mobile Donate Button */}
           <div className="px-4 py-4 border-t border-gray-700">
-            <a
-              href="#login"
-              className="w-full flex items-center justify-center px-4 py-3 border border-transparent text-base font-medium rounded-lg text-white transition duration-150 hover:opacity-90"
-              
-              onClick={closeAllMobile}
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="w-full mt-3 bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-lime-500/25 transition-all"
+              onClick={closeAllMenus}
             >
-               <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="w-full mt-3 bg-gradient-to-r from-lime-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-xl hover:shadow-lime-500/25 transition-all">
               Donate Now
             </motion.button>
-            </a>
           </div>
         </div>
       </div>
@@ -269,12 +286,7 @@ const App = () => {
   );
 };
 
-export default App;
-
-
-
-
-
+export default Navbar;
 
 
 

@@ -249,7 +249,7 @@ const Stem = () => {
                 {...hoverMotion}
               >
                 <div
-                  className="absolute inset-0 rounded-2xl animate-spin-slow bg-gradient-anim"
+                  className="absolute inset-0 rounded-2xl animate-spin-slow bg-gradient-anim h-auto"
                   style={{
                     background: "linear-gradient(120deg, #AFDE00, #E70C80, #FF8000, #AFDE00)"
                   }}
@@ -288,7 +288,7 @@ const Stem = () => {
               {/* Level 5 */}
               <motion.article
                 aria-labelledby="level5-title"
-                className="relative rounded-2xl p-[2px] overflow-hidden group"
+                className="relative rounded-2xl p-[2px] overflow-hidden group h-auto"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.22 }}
@@ -315,7 +315,7 @@ const Stem = () => {
 
                   <div className="mt-4 text-gray-700 space-y-3">
                     <p className="text-sm md:text-base leading-relaxed">
-                      Level 5 STEM training is designed for those seeking to advance their careers or pursue further education in STEM fields. It focuses on developing expertise in specific areas.
+  Level 5 STEM training prepares individuals to advance in STEM careers or higher education. It focuses on practical projects, industry collaboration, and developing specialized technical skills.
                     </p>
 
                     <p className="text-sm md:text-base leading-relaxed">

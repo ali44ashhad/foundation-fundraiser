@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import images from "../assets/images";
 
@@ -55,32 +55,68 @@ const ContactUs = () => {
 
   /* ---------- ALL JSX inside single return ---------- */
   return (
-
-
     <>
       <motion.div
-        className="relative w-full h-[70vh] min-h-[300px] overflow-hidden"
+        className="relative w-full h-[70vh] min-h-[400px] overflow-hidden"
         initial="hidden"
         whileInView="visible"
+        // Use a background image from the assets or a placeholder
       >
         <motion.img
-          src=""
+          // Placeholder image source if images.heroContact is not available
+          src={images.contactHero || "https://images.unsplash.com/photo-1542840410-ecc5b0660f85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzAwMzd8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwdXN8ZW58MHx8fHwxNjk5MjI3MTUwfDA&ixlib=rb-4.0.3&q=80&w=1080"}
           alt="Hands stacked in different skin tones"
           className="w-full h-full object-cover"
         />
 
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center"
+        {/* Overlay for contrast */}
+        <div className="absolute inset-0 bg-black/50"></div>
 
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center"
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+          }}
         >
-          <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase text-center px-4">
-           CONTACT US 
+          <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight uppercase px-4 mb-4">
+            Connect With Us
           </h1>
+
+          {/* New Paragraph */}
+          <p className="max-w-3xl text-lg sm:text-xl text-gray-200 mb-8 font-light">
+            We are dedicated to building a stronger community. Reach out to our team today to learn more about our projects, volunteer opportunities, or to discuss a partnership.
+          </p>
+
+          {/* New Buttons (Responsive) */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <motion.a
+              href="#contact-form" // Scroll to form
+              className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg flex items-center justify-center space-x-2 transition duration-300 transform hover:scale-[1.05] whitespace-nowrap
+                        bg-white text-[#E70C80] hover:bg-gray-100"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>Send a Message</span>
+              <Send className="w-5 h-5" />
+            </motion.a>
+
+            <motion.a
+              href="mailto:talktous@ishep.org.uk"
+              className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg flex items-center justify-center space-x-2 transition duration-300 transform hover:scale-[1.05] whitespace-nowrap
+                        bg-gradient-to-r from-[#E70C80] to-[#FF8000] text-white hover:from-[#FF8000] hover:to-[#E70C80]"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <span>Email Our Team</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.a>
+          </div>
         </motion.div>
       </motion.div>
 
       <div className="min-h-screen bg-gray-100 p-4 sm:p-8">
-        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden">
+        <div className="max-w-7xl mx-auto rounded-3xl overflow-hidden bg-white shadow-2xl">
           {/* Header Section */}
           <header className="p-6 md:p-12 text-center">
             {/* Gradient Heading */}
@@ -113,23 +149,27 @@ const ContactUs = () => {
 
           {/* Main Grid: Image + Form */}
           <div className="grid grid-cols-1 lg:grid-cols-2">
-            {/* Left: Image / Graphic block */}
-            <div className="relative h-64 lg:h-auto flex items-center justify-center p-4 rounded-b-2xl lg:rounded-b-none lg:rounded-br-none lg:rounded-l-3xl overflow-hidden">
+            {/* Left: Image / Graphic block with Gradient Border */}
+            {/* Outer div for the gradient border effect */}
+            <div className="p-1 bg-gradient-to-br from-[#E70C80] via-[#FF8000] to-[#AFDE00] rounded-b-2xl lg:rounded-b-none lg:rounded-br-none lg:rounded-l-3xl shadow-xl">
+              <div className="relative h-64 lg:h-full min-h-[300px] flex items-center justify-center rounded-b-xl lg:rounded-b-none lg:rounded-bl-3xl bg-gray-200 overflow-hidden">
                 <img
-                  src={images.contactImage}
+                  // Placeholder image source if images.contactImage is not available
+                  src={images.contactImage || "https://images.unsplash.com/photo-1542840410-ecc5b0660f85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wzNzAwMzd8MHwxfHNlYXJjaHw0fHxjb250YWN0JTIwdXN8ZW58MHx8fHwxNjk5MjI3MTUwfDA&ixlib=rb-4.0.3&q=80&w=1080"}
                   alt="Illustration of contact or meeting"
-                  className="w-full h-full object-cover absolute inset-0"
+                  className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src =
-                      "";
+                    e.target.src = "";
                   }}
                 />
-          
+                {/* Optional: Add a subtle overlay to the image */}
+                <div className="absolute inset-0 bg-black/10"></div>
+              </div>
             </div>
 
             {/* Right: Form */}
-            <section className="py-20 sm:p-8 lg:p-12">
+            <section id="contact-form" className="py-12 px-6 sm:p-8 lg:p-12">
               <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b-2 border-[#AFDE00]/50 pb-2">
                 Send Us a Message
               </h2>
@@ -251,9 +291,9 @@ const ContactUs = () => {
                 <button
                   type="submit"
                   className="w-full flex items-center justify-center space-x-2 py-3 px-6 text-lg font-bold text-white rounded-lg shadow-xl 
-                           bg-gradient-to-r from-[#E70C80] to-[#FF8000] 
-                           hover:from-[#FF8000] hover:to-[#E70C80] 
-                           transition duration-300 transform hover:scale-[1.01]"
+                                 bg-gradient-to-r from-[#E70C80] to-[#FF8000] 
+                                 hover:from-[#FF8000] hover:to-[#E70C80] 
+                                 transition duration-300 transform hover:scale-[1.01]"
                 >
                   <Send className="w-5 h-5" />
                   <span>Submit Inquiry</span>
