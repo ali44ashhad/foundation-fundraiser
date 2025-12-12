@@ -45,9 +45,17 @@ const OurPurpose = () => {
 
   {/* Text Overlay */}
   <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
-    <h1 className="text-white text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
-      Our Purpose
-    </h1>
+    <h1
+  className="
+    text-4xl sm:text-5xl lg:text-6xl 
+    font-bold tracking-widest uppercase 
+    bg-gradient-to-r from-[#AFDE00] via-[#E70C80] to-[#FF8000] 
+    text-transparent bg-clip-text
+  "
+>
+  Our Purpose
+</h1>
+
 
     {/* Paragraph */}
     <p className="text-white max-w-2xl mt-4 text-base sm:text-lg lg:text-xl leading-relaxed">

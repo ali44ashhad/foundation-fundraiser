@@ -72,47 +72,93 @@ const ContactUs = () => {
         {/* Overlay for contrast */}
         <div className="absolute inset-0 bg-black/50"></div>
 
-        <motion.div
-          className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center"
-          variants={{
-            hidden: { opacity: 0, y: 50 },
-            visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-          }}
-        >
-          <h1 className="text-white text-4xl sm:text-5xl lg:text-7xl font-extrabold tracking-tight uppercase px-4 mb-4">
-            Connect With Us
-          </h1>
+       <motion.div
+  className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center"
+  variants={{
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+  }}
+>
+  {/* Heading */}
+  <h1 className="
+      text-white 
+      text-3xl           /* Mobile */
+      sm:text-4xl        /* Tablets */
+      lg:text-6xl        /* Large screens */
+      font-extrabold 
+      tracking-tight 
+      uppercase 
+      px-2 
+      mb-3
+    "
+  >
+    Connect With Us
+  </h1>
 
-          {/* New Paragraph */}
-          <p className="max-w-3xl text-lg sm:text-xl text-gray-200 mb-8 font-light">
-            We are dedicated to building a stronger community. Reach out to our team today to learn more about our projects, volunteer opportunities, or to discuss a partnership.
-          </p>
+  {/* Paragraph */}
+  <p className="
+      max-w-xl 
+      text-base          /* Mobile */
+      sm:text-lg         /* Tablets */
+      text-gray-200 
+      mb-6 
+      font-light
+    "
+  >
+    We are dedicated to building a stronger community. Reach out to our team today
+    to learn more about our projects, volunteer opportunities, or to discuss a
+    partnership.
+  </p>
 
-          {/* New Buttons (Responsive) */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <motion.a
-              href="#contact-form" // Scroll to form
-              className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg flex items-center justify-center space-x-2 transition duration-300 transform hover:scale-[1.05] whitespace-nowrap
-                        bg-white text-[#E70C80] hover:bg-gray-100"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>Send a Message</span>
-              <Send className="w-5 h-5" />
-            </motion.a>
+  {/* Buttons */}
+  <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center">
+    <motion.a
+      href="#contact-form"
+      className="
+        px-6 py-3 
+        text-base         /* Mobile */
+        sm:text-lg        /* Tablets */
+        font-semibold 
+        rounded-full 
+        shadow-lg 
+        flex items-center justify-center space-x-2 
+        transition duration-300 transform 
+        bg-white text-[#E70C80] 
+        hover:bg-gray-100 
+        whitespace-nowrap
+      "
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <span>Send a Message</span>
+      <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+    </motion.a>
 
-            <motion.a
-              href="mailto:talktous@ishep.org.uk"
-              className="px-8 py-3 text-lg font-semibold rounded-full shadow-lg flex items-center justify-center space-x-2 transition duration-300 transform hover:scale-[1.05] whitespace-nowrap
-                        bg-gradient-to-r from-[#E70C80] to-[#FF8000] text-white hover:from-[#FF8000] hover:to-[#E70C80]"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span>Email Our Team</span>
-              <ArrowRight className="w-5 h-5" />
-            </motion.a>
-          </div>
-        </motion.div>
+    <motion.a
+      href="mailto:talktous@ishep.org.uk"
+      className="
+        px-6 py-3 
+        text-base         /* Mobile */
+        sm:text-lg        /* Tablets */
+        font-semibold 
+        rounded-full 
+        shadow-lg 
+        flex items-center justify-center space-x-2 
+        transition duration-300 transform 
+        bg-gradient-to-r from-[#E70C80] to-[#FF8000] 
+        text-white 
+        hover:from-[#FF8000] hover:to-[#E70C80] 
+        whitespace-nowrap
+      "
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      <span>Email Our Team</span>
+      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+    </motion.a>
+  </div>
+</motion.div>
+
       </motion.div>
 
       <div className="min-h-screen bg-gray-100 p-4 sm:p-8">
