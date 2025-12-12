@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import images from '../assets/images';
+import { Link } from 'react-router-dom';
 
 const vacanciesSubmenu = [
   { name: 'Board Member', href: '/trust-vacancies' },
@@ -106,7 +107,8 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-20">
 
             {/* Logo */}
-            <img
+         <Link to="/">
+                 <img
   src={images.companyLogo}
   alt="Logo"
   className="
@@ -117,6 +119,7 @@ const Navbar = () => {
     object-contain
   "
 />
+         </Link>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex lg:items-center lg:space-x-6">
